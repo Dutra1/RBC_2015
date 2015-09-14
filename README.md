@@ -29,3 +29,5 @@ git status (checkear que estoy en la nueva branch)
 git checkout master (volver a master)
 git merge [nueva branch] (trae los cambios commiteados de nueva branch a master)
 git push (pushea el nuevo master, con los cambios de la otra branch)
+
+testing
