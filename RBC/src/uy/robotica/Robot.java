@@ -1,6 +1,7 @@
 package uy.robotica;
 
 import behaviours.Dummy;
+import behaviours.FollowWall;
 import behaviours.HitWall;
 import behaviours.ShootCrossbow;
 import behaviours.Wander;
@@ -19,9 +20,7 @@ import config.Globals;
 public class Robot {
 	
 	public static DifferentialPilot pilot;
-	public static Map map;
-	public static float x;
-	public static float y;
+
 	public static boolean holding = false;
 	
 	public Robot(){
@@ -32,19 +31,6 @@ public class Robot {
 	public static void main(String argv[]) {
 
 		pilot = new DifferentialPilot(Globals.wheelDiameter, Globals.trackWidth, Globals.leftMotor,Globals.rightMotor,true);
-		
-		CompassHTSensor compass = new CompassHTSensor(Globals.compassPort);
-		compass.resetCartesianZero();
-		
-		UltrasonicSensor us1 = new UltrasonicSensor(Globals.distance1Port);
-		TouchSensor ts1 = new TouchSensor(Globals.touch1Port);
-		
-		ColorSensor cs = new ColorSensor(Globals.colorPort);
-		//Enables or disables Flood Light
-		if (Globals.enableColorSensorFL)
-			cs.setFloodlight(Globals.colorSensorFLColor);
-		else
-			cs.setFloodlight(false);
 
 		
 		LCD.drawString(Globals.introMsg, 0, 0);
@@ -52,11 +38,8 @@ public class Robot {
 		
 		Button.waitForAnyPress();
 		
-		Behavior b1 = new Wander(pilot);
-		Behavior b2 = new HitWall(pilot,us1,ts1);
-		Behavior b3 = new ShootCrossbow(ts1);
-		Behavior b4 = new Dummy();
-		Behavior [] bArray = {b1,b2};
+		Behavior b1 = new FollowWall(pilot,Globals.compassPort,Globals.irPort,Globals.touchPort);
+		Behavior [] bArray = {b1};
 		Arbitrator a = new Arbitrator(bArray);
 		a.start();
 		

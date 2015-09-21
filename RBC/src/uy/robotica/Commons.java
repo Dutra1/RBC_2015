@@ -42,7 +42,7 @@ public class Commons {
 		//Get multiple color readings
 		int colorId = 0;
 		
-		for (int i=0; i < Globals.colorSensorSamples; i++){
+		for (int i=0; i < 2; i++){
 			Color color = cs.getColor();
 			
 			colorId = color.getColor();

@@ -33,7 +33,7 @@ public class FoundWall implements Behavior {
 	public boolean takeControl() {
 		
 		LCD.drawString("Distance: " + Float.toString(s1.getDistance()), 0, 2);
-		return (s1.getDistance() < Globals.hitDistance);
+		return (s1.getDistance() < 10);
 		
 			
 	}
