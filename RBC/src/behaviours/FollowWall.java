@@ -33,17 +33,16 @@ public class FollowWall implements Behavior {
 	private void calculateForce(){
 		
 		FollowWall.correctionDistance = 0;
+		FollowWall.correctionAngle = 0;
 		if (FollowWall.position[1] > Globals.desiredAngle + 10){
-			FollowWall.correctionAngle = -10;
+			FollowWall.correctionAngle = -5;
 		}
 		else if (FollowWall.position[1] < Globals.desiredAngle - 10){
-			FollowWall.correctionAngle = 10;
+			FollowWall.correctionAngle = 5;
 		}
 		else{
-			FollowWall.correctionAngle = 0;
 			if (FollowWall.position[0] > Globals.wallDistance){
-				FollowWall.correctionDistance = 1;
-				
+				FollowWall.correctionDistance = 1;	
 			}
 			else if (FollowWall.position[0] < Globals.wallDistance){
 				FollowWall.correctionDistance = -1;
@@ -56,10 +55,10 @@ public class FollowWall implements Behavior {
 		if (!FollowWall.colissionDetected){
 			if (FollowWall.correctionAngle != 0){
 				this.pilot.rotate(FollowWall.correctionAngle);
-			}
-			
-			if (FollowWall.correctionDistance != 0){
+			} else if (FollowWall.correctionDistance != 0){
 				this.pilot.travelArc(20, FollowWall.correctionDistance);
+			} else {
+				this.pilot.travel(10);
 			}
 		}
 		
