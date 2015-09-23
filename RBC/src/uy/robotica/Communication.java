@@ -5,7 +5,7 @@ import lejos.nxt.comm.*;
 
 public class Communication extends Thread {
 
-	private DataInputStream input;
+	//private DataInputStream input;
 	private DataOutputStream output;
 	private NXTConnection connection = null;
 	

@@ -2,7 +2,6 @@ package behaviours;
 
 
 import config.Globals;
-import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
 import lejos.nxt.TouchSensor;
 import lejos.nxt.addon.CompassHTSensor;
