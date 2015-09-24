@@ -3,7 +3,6 @@ package config;
 import lejos.nxt.Motor;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
-import lejos.robotics.Color;
 
 public class Globals{
 	
@@ -36,11 +35,11 @@ public class Globals{
 	public static final NXTRegulatedMotor gripperMotor =  Motor.C;
 	
 	//Degrees
-	public static final int desiredAngle = 90;
+	public static int desiredAngle = 90;
 	
 	//Distances
-	public static final int wallDistance = 8;
-	
+	public static final int wallDistance = 150;
+	public static final int minimunWallDistance = 50;
 	
 	public static final int backwardsDistance = 10;
 	

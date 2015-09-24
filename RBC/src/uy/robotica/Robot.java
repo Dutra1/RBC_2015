@@ -1,16 +1,8 @@
 package uy.robotica;
 
-import behaviours.Dummy;
 import behaviours.FollowWall;
-import behaviours.HitWall;
-import behaviours.ShootCrossbow;
-import behaviours.Wander;
 import lejos.nxt.Button;
-import lejos.nxt.ColorSensor;
 import lejos.nxt.LCD;
-import lejos.nxt.TouchSensor;
-import lejos.nxt.UltrasonicSensor;
-import lejos.nxt.addon.CompassHTSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
