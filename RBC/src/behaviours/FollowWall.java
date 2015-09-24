@@ -19,12 +19,17 @@ public class FollowWall implements Behavior {
 	private TouchSensor touch;
 	static private int[] position;
 	static private int correctionAngle = 0;
-	static private int correctionDistance = 0;
+	static private double correctionDistance = 0;
 	static private boolean colissionDetected = false;
-
+	static private int umbral = 15;
+	static private int correctionFactor = 10;
+	
 	private void readSensors(){
 		
 		FollowWall.position[1] = (int) this.compass.getDegreesCartesian();
+		if(FollowWall.position[1] > 315){
+			FollowWall.position[1] = FollowWall.position[1]-360;
+		}
 		FollowWall.position[0] = this.ir.getDistance();
 		FollowWall.colissionDetected = this.touch.isPressed(); 
 	}
@@ -33,19 +38,14 @@ public class FollowWall implements Behavior {
 		
 		FollowWall.correctionDistance = 0;
 		FollowWall.correctionAngle = 0;
-		if (FollowWall.position[1] > Globals.desiredAngle + 10){
-			FollowWall.correctionAngle = -5;
+		if (FollowWall.position[1] > Globals.desiredAngle + umbral ){
+			FollowWall.correctionDistance = -0.1;
 		}
-		else if (FollowWall.position[1] < Globals.desiredAngle - 10){
-			FollowWall.correctionAngle = 5;
+		else if (FollowWall.position[1] < Globals.desiredAngle - umbral){
+			FollowWall.correctionDistance = 0.1;			
 		}
 		else{
-			if (FollowWall.position[0] > Globals.wallDistance){
-				FollowWall.correctionDistance = 1;	
-			}
-			else if (FollowWall.position[0] < Globals.wallDistance){
-				FollowWall.correctionDistance = -1;
-			}
+			FollowWall.correctionDistance = (FollowWall.position[0] - Globals.wallDistance)/correctionFactor;
 		}
 	}
 	
@@ -55,10 +55,14 @@ public class FollowWall implements Behavior {
 			if (FollowWall.correctionAngle != 0){
 				this.pilot.rotate(FollowWall.correctionAngle);
 			} else if (FollowWall.correctionDistance != 0){
-				this.pilot.travelArc(20, FollowWall.correctionDistance);
+				this.pilot.arcForward( FollowWall.correctionDistance);
 			} else {
-				this.pilot.travel(10);
+				this.pilot.forward();
 			}
+		} else {
+			pilot.stop();
+			pilot.travel(-10);
+			Globals.desiredAngle = (Globals.desiredAngle + 270)%360;
 		}
 		
 	}
