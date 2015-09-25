@@ -1,6 +1,5 @@
 package behaviours;
 
-
 import config.Globals;
 import lejos.nxt.SensorPort;
 import lejos.nxt.TouchSensor;

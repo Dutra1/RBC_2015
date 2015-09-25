@@ -2,16 +2,32 @@ package uy.robotica;
 
 public class Music {
 
-
-	private int c = 261;
+	private int cL = 130;
+	private int cSL = 139;
+	private int dL = 147;
+	private int dSL = 156;
+	private int eL = 165;
+	private int fL = 175;
+	private int fSL = 185;
+	private int gL = 196;
+	private int gSL = 208;
+	private int aL = 220;
+	private int aSL = 233;
+	private int bL = 247;
+	
+	private int c = 262;
+	private int cS = 277;
 	private int d = 294;
+	private int dS = 311;
 	private int e = 329;
 	private int f = 349;
+	private int fS = 370;
 	private int g = 391;
 	private int gS = 415;
 	private int a = 440;
 	private int aS = 455;
 	private int b = 466;
+	
 	private int cH = 523;
 	private int cSH = 554;
 	private int dH = 587;
@@ -22,10 +38,13 @@ public class Music {
 	private int gH = 784;
 	private int gSH = 830;
 	private int aH = 880;
-
+	private int aSH = 932;
+	private int bH = 988;
 
 	public void playMarch()  {
 	
+		// Time = 500ms
+		
 		playTone(this.a, 500);
 		playTone(this.a, 500);
 		playTone(this.a, 500);
@@ -97,11 +116,36 @@ public class Music {
 		playTone(this.c, 125);
 		playTone(this.a, 1000);
 	}
-
-
-	private void playTone(int tone, int wait)  {
 	
-		lejos.nxt.Sound.playTone(tone, 200);
+	public void playMarioDeath() {
+		
+		int tempo = 150; //ms per tempo
+		
+		playTone(this.cH, tempo/4);
+		playTone(this.cSH, tempo/4);
+		playTone(this.dH, tempo/2);
+		mash_sleep(tempo*3);
+		
+		playTone(this.b, tempo);
+		playTone(this.fH, tempo);
+		mash_sleep(tempo);
+		playTone(this.fH, tempo);
+		
+		playTone(this.fH, tempo*4/3);
+		playTone(this.eH, tempo*4/3);
+		playTone(this.dH, tempo*4/3);
+		
+		playTone(this.cH, tempo);
+		playTone(this.e, tempo);
+		playTone(this.gL, tempo);
+		playTone(this.e, tempo);
+		
+		playTone(this.cL, tempo);
+		mash_sleep(tempo*3);
+	}
+	
+	private void playTone(int tone, int wait)  {	
+		lejos.nxt.Sound.playTone(tone, wait*9/10);
 		mash_sleep(wait);
 	}
 	
@@ -110,7 +154,7 @@ public class Music {
 		try {
 			java.lang.Thread.sleep(ms);
 		} catch (java.lang.Exception e) {
-	    }
+		}
 	}
 
 }
