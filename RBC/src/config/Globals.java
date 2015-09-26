@@ -25,6 +25,8 @@ public class Globals{
 	//Motors
 	public static final int travelSpeed = 70;
 	public static final int rotateSpeed = 40;
+	public static final int scoopSpeed = 100;
+	public static final int scoopRotationAngle = 180;
 	public static final NXTRegulatedMotor leftMotor =  Motor.A;
 	public static final NXTRegulatedMotor rightMotor =  Motor.B;
 	public static final NXTRegulatedMotor scoopMotor = Motor.C;
