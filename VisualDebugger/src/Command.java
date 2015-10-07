@@ -28,7 +28,6 @@ public class Command extends JFrame {
 	private     JPanel      infoPanel;
 	private     JPanel      messagePanel;
 	private JButton btnAddtile;
-	public static Map map;
 	static public  JTextField textX;
 	static public JTextField textY;
 	static public JTextField textWorld;
@@ -52,7 +51,6 @@ public Command(){
 	    getContentPane().add( topPanel );
 	
 	    // Create the panels
-	    createMapPanel();
 	    createInfoPanel();
 	    createMessagePanel();
 	
@@ -60,29 +58,15 @@ public Command(){
 	    splitPaneV = new JSplitPane( JSplitPane.VERTICAL_SPLIT );
 	    topPanel.add( splitPaneV, BorderLayout.CENTER );
 	
-	    splitPaneH = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT );
-	    splitPaneH.setLeftComponent( messagePanel );
-	    splitPaneH.setRightComponent( mapPanel );
+	    //splitPaneH = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT );
+	    //splitPaneH.setLeftComponent( messagePanel );
+	    //splitPaneH.setRightComponent( mapPanel );
 	
-	    splitPaneV.setLeftComponent( splitPaneH );
+	    splitPaneV.setLeftComponent( messagePanel );
 	    splitPaneV.setRightComponent(infoPanel);
 	    infoPanel.setLayout(null);
 	    
-	    btnAddtile = new JButton("AddTile");
-	    btnAddtile.addActionListener(new ActionListener() {
-	    	public void actionPerformed(ActionEvent arg0) {
-	    		int randomX = (int )(Math.random() * Globals.MAP_SIZE);
-	    		int randomY = (int)(Math.random() * Globals.MAP_SIZE);
-	    		
-	    		textX.setText(Integer.toString(randomX));
-	    		textY.setText(Integer.toString(randomY));
-	    		
-	    		Command.map.setTile(randomX, randomY, Globals.WALL);
-	    		Command.map.repaint();
-	    	}
-	    });
-	    btnAddtile.setBounds(435, 14, 92, 29);
-	    infoPanel.add(btnAddtile);
+	    //infoPanel.add(btnAddtile);
 	    
 	    textX = new JTextField();
 	    textX.setBounds(32, 83, 35, 29);
@@ -152,17 +136,6 @@ public Command(){
 	}
 
 	
-	public void createMapPanel(){
-		
-	    mapPanel = new JPanel();
-	    mapPanel.setLayout( new BorderLayout() );
-		mapPanel.setPreferredSize( new Dimension( 400, 400 ) );
-		mapPanel.setMinimumSize( new Dimension( 400, 400 ) );
-		this.map = new Map();
-		mapPanel.add(map);
-	
-	}
-
 	
 	public void createInfoPanel(){
 		

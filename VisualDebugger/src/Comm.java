@@ -22,7 +22,7 @@ public class Comm extends Thread {
 			//this.connection = USB.waitForConnection();
 			this.nxtComm = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
 			  
-			NXTInfo nxtInfo = new NXTInfo(NXTCommFactory.BLUETOOTH, "NXT", "00:16:53:0B:9A:B5");
+			NXTInfo nxtInfo = new NXTInfo(NXTCommFactory.BLUETOOTH, "NXT", "00:16:53:0D:32:25");
 			  		  
 			try{
 				nxtComm.open(nxtInfo);
@@ -75,7 +75,6 @@ public class Comm extends Thread {
 		        	
 		        	int read = input.read(b,0,size);
 		        	input.mark(read);
-		        	//input.reset();
 		        	String r = new String(b, "UTF-8");
 		        	System.out.println(r);
 		        	String[] data = r.split(";");
