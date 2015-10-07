@@ -25,22 +25,23 @@ public class Globals{
 	//Motors
 	public static final int travelSpeed = 70;
 	public static final int rotateSpeed = 40;
+	public static final int scoopSpeed = 100;
+	public static final int scoopRotationAngle = 180;
 	public static final NXTRegulatedMotor leftMotor =  Motor.A;
 	public static final NXTRegulatedMotor rightMotor =  Motor.B;
-	public static final NXTRegulatedMotor crossbowMotor = Motor.C;
+	public static final NXTRegulatedMotor scoopMotor = Motor.C;
 	
-	//Gripper
-	public static final int gripperSpeed = 300;
-	public static final int gripperRotationAngle = 180;
-	public static final NXTRegulatedMotor gripperMotor =  Motor.C;
-	
-	//Degrees
+	//Compass Navigation
 	public static int desiredAngle = 90;
-	
-	//Distances
 	public static final int wallDistance = 150;
 	public static final int minimunWallDistance = 50;
 	
+	//IR Navigation
+	public static int timeBetweenIRMeasures = 1000;
+	public static int idealWallDistance = 500;
+	public static int estimatedMMperSec = 5000;
+	
+	//General Navigation
 	public static final int backwardsDistance = 10;
 	
 	

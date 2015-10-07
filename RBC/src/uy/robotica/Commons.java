@@ -21,15 +21,15 @@ public class Commons {
 	
 	public static void liftLoader(NXTRegulatedMotor motor){
 		
-		motor.setSpeed(Globals.gripperSpeed);
-		motor.rotate(-Globals.gripperRotationAngle);
+		motor.setSpeed(Globals.scoopSpeed);
+		motor.rotate(-Globals.scoopRotationAngle);
 	}
 	
 	
 	public static void downLoader(NXTRegulatedMotor motor){
 		
-		motor.setSpeed(Globals.gripperSpeed);
-		motor.rotate(Globals.gripperRotationAngle);
+		motor.setSpeed(Globals.scoopSpeed);
+		motor.rotate(Globals.scoopRotationAngle);
 	}
 	
 	

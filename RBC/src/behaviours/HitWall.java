@@ -43,8 +43,8 @@ public class HitWall implements Behavior {
 		pilot.stop();
 		pilot.travel(-Globals.backwardsDistance);
 		
-		Commons.liftLoader(Globals.gripperMotor);
-		Commons.downLoader(Globals.gripperMotor);
+		Commons.liftLoader(Globals.scoopMotor);
+		Commons.downLoader(Globals.scoopMotor);
 
 		//Direccion de rotacion dependiendo del estado
 		pilot.rotate(90);
