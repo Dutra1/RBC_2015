@@ -26,7 +26,7 @@ public class Robot {
 
 		pilot = new DifferentialPilot(Globals.wheelDiameter, Globals.trackWidth, Globals.leftMotor,Globals.rightMotor,true);
 
-		Music music = new Music();
+		//Music music = new Music();
 		//music.playMarioDeath();
 		
 		LCD.drawString(Globals.introMsg, 0, 0);

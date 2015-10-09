@@ -33,11 +33,11 @@ public class SimplerFollowWall implements Behavior{
 	@Override
 	public void action() {
 		float currentAngle = compass.getDegreesCartesian();
+		int irDistance = ir.getDistance();
+		
 		float wallAngle = getWallAngle(currentAngle);
 		double absAngleDifference = Math.abs(angleDifference(currentAngle, wallAngle));
-		
-		int irDistance = ir.getDistance();
-		double actualDistance = irDistance * Math.cos(absAngleDifference);
+		double actualDistance = irDistance * Math.cos(Math.toRadians(absAngleDifference));
 		
 		float angleDifference;
 		if (actualDistance < Globals.wallDistance - Globals.distanceTolerance) {
