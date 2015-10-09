@@ -57,8 +57,8 @@ public class SenseColor implements Behavior{
 			if (i < Globals.colorSensorSamples - 1) Delay.msDelay(Globals.msBetweenReadings);
 			
 			if (Globals.debug){
-				LCD.drawString("RGB Sensing", 0, 0);
-				LCD.drawString("(" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + ")", 0, i+1);
+				//LCD.drawString("RGB Sensing", 0, 0);
+				//LCD.drawString("(" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + ")", 0, i+1);
 			}
 		}
 		

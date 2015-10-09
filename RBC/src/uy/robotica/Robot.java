@@ -15,6 +15,7 @@ public class Robot {
 	public static DifferentialPilot pilot;
 
 	public static boolean holding = false;
+	public static Communication comm;
 	
 	public Robot(){
 		
@@ -31,6 +32,9 @@ public class Robot {
 		LCD.drawString(Globals.introMsg, 0, 0);
 		LCD.drawString(Globals.pressButton, 0, 1);
 		
+		comm = new Communication();
+	    comm.start();
+	        
 		Button.waitForAnyPress();
 		
 		//Behavior b1 = new FollowWall(pilot,Globals.compassPort,Globals.irPort,Globals.touchPort);

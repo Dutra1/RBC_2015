@@ -1,24 +1,19 @@
 package uy.robotica;
 
 import java.io.*;
+
+import config.Globals;
+import lejos.nxt.LCD;
+import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.comm.*;
 
 public class Communication extends Thread {
 
-	//private DataInputStream input;
 	private DataOutputStream output;
 	private NXTConnection connection = null;
 	
 	public Communication(){
 
-		  try {
-			  this.connection = USB.waitForConnection();
-			  //this.connection = Bluetooth.waitForConnection();
-          
-          }
-		  catch (Exception e) {
-			  System.out.println("Waiting connection error " + e);
-		  }
 	}
 	
 	
@@ -26,29 +21,29 @@ public class Communication extends Thread {
   public void run() {
 	  
 	  super.run();
+	  
+	  this.connection = RS485.getConnector().connect("NXT", RS485Connection.PACKET);
 		
 	  while (true) {
 		  try{
-	           //output = new DataOutputStream(connection.openOutputStream());
 	           output = connection.openDataOutputStream();           
 	           
 	               try {
 	            	   
-	            	   String msg = Integer.toString(55);
+	            	   CompassHTSensor compass = new CompassHTSensor(Globals.compassPort);
+	           		
+	            	   int compassValue = (int) Commons.getCompassAngle(compass);
 	            	   
-	            	   byte[] b = msg.getBytes("UTF-8");
-	            	   output.writeInt(b.length);
-	            	   output.write(b);
+	            	   output.writeInt(compassValue);
 	                   output.flush();
 	               }
 	               catch (Exception e) {
-	            	   System.out.println("Read/Write error " + e);
+	            	   System.out.println("Write error " + e);
 	               }
 	           
 	          try {
 	               
 	               output.close();
-	               //connection.close();
 	           }
 	           catch (IOException ioe){
 	            	System.out.println("Close stream error " + ioe);
@@ -59,11 +54,13 @@ public class Communication extends Thread {
 			  
 			  System.out.println("Open stream error " + e);
 	      }
+		  
 		  try {
-			  Thread.sleep(550);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			  Thread.sleep(100);
+			  
+		  } catch (InterruptedException e) {
+			  e.printStackTrace();
+		  }
 	  }          
             
   }
