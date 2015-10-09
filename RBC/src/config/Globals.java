@@ -31,19 +31,17 @@ public class Globals{
 	public static final NXTRegulatedMotor rightMotor =  Motor.B;
 	public static final NXTRegulatedMotor scoopMotor = Motor.C;
 	
-	//Compass Navigation
-	public static int desiredAngle = 90;
-	public static final int wallDistance = 150;
-	public static final int minimunWallDistance = 50;
-	
-	//IR Navigation
-	public static int timeBetweenIRMeasures = 1000;
-	public static int idealWallDistance = 500;
-	public static int estimatedMMperSec = 5000;
-	
 	//General Navigation
 	public static final int backwardsDistance = 10;
+	public static final int wallDistance = 150; //mm
+		
+	//Vector Navigation
+	public static int desiredAngle = 90;
+	public static final int minimunWallDistance = 50;
 	
-	
-	
+	//Simple Navigation
+	public static int distanceTolerance = 30; //mm
+	public static int turnAngle = 20;
+	public static int angleTolerance = 5;
+	public static int turnRadius = 5;
 }

@@ -1,7 +1,7 @@
 package uy.robotica;
 
 import behaviours.FollowWall;
-import behaviours.IRFollowWall;
+import behaviours.SimplerFollowWall;
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
 import lejos.robotics.navigation.DifferentialPilot;
@@ -38,7 +38,7 @@ public class Robot {
 		Button.waitForAnyPress();
 		
 		//Behavior b1 = new FollowWall(pilot,Globals.compassPort,Globals.irPort,Globals.touchPort);
-		Behavior b1 = new IRFollowWall(pilot, Globals.irPort,Globals.touchPort);
+		Behavior b1 = new SimplerFollowWall(pilot, Globals.irPort, Globals.touchPort, Globals.compassPort);
 		Behavior [] bArray = {b1};
 		Arbitrator a = new Arbitrator(bArray);
 		a.start();
