@@ -21,9 +21,8 @@ public class Globals{
 	public static final int[] purpleColorRanges = {50,120, 40,80, 60,120};
 	
 	//Compass
-	public static final SensorPort compassPort = SensorPort.S1;
-	public static final int idealAngle = 90;
-	public static final int allowedAngleError = 20;
+	public static final int idealAngle = 270;
+	public static final int allowedAngleError = 30;
 	
 	//Kicker
 	public static final NXTRegulatedMotor kicker = Motor.C;

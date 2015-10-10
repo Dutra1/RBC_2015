@@ -17,10 +17,9 @@ public class Globals{
 	public static final float trackWidth = 19f; 
 	
 	//Sensor Ports
-	public static final SensorPort colorPort =  SensorPort.S4;
+	public static final SensorPort touchPort =  SensorPort.S1;
 	public static final SensorPort irPort =  SensorPort.S2;
 	public static final SensorPort compassPort =  SensorPort.S3;
-	public static final SensorPort touchPort =  SensorPort.S1;
 	
 	//Motors
 	public static final int travelSpeed = 70;
@@ -40,8 +39,8 @@ public class Globals{
 	public static final int minimunWallDistance = 50;
 	
 	//Simple Navigation
-	public static int distanceTolerance = 30; //mm
-	public static int turnAngle = 20;
-	public static int angleTolerance = 5;
-	public static int turnRadius = 5;
+	public static int distanceTolerance = 50; //mm
+	public static int turnAngle = 30;
+	public static int angleTolerance = 10;
+	public static int turnRadius = 10;
 }

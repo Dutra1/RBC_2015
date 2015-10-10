@@ -24,7 +24,7 @@ public class Robot {
 	
 	public static void main(String argv[]) {
 
-		pilot = new DifferentialPilot(Globals.wheelDiameter, Globals.trackWidth, Globals.leftMotor,Globals.rightMotor,true);
+		pilot = new DifferentialPilot(Globals.wheelDiameter, Globals.trackWidth, Globals.leftMotor, Globals.rightMotor, true);
 
 		//Music music = new Music();
 		//music.playMarioDeath();

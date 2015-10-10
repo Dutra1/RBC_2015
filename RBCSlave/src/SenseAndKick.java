@@ -50,7 +50,6 @@ public class SenseAndKick implements Behavior{
 	}
 	
 	public static double getDistanceFromColorRange(int red, int green, int blue, int[] range) {
-		//Usa los ranges hardcodeados!
 		double distance = 0.0;
 		
 		//Distancias ponderadas segun la variancia en el rango
@@ -63,8 +62,6 @@ public class SenseAndKick implements Behavior{
 	
 	public static BallColor getBallColor(ColorSensor cs){	
 		
-		if (Globals.debug) LCD.clear();
-		
 		//Get multiple readings
 		int red = 0, green = 0, blue = 0;	
 		for (int i = 0; i < Globals.colorSensorSamples; i++){
@@ -75,11 +72,6 @@ public class SenseAndKick implements Behavior{
 			blue += color.getBlue();
 			
 			if (i < Globals.colorSensorSamples - 1) Delay.msDelay(Globals.msBetweenReadings);
-			
-			if (Globals.debug){
-				//LCD.drawString("RGB Sensing", 0, 0);
-				//LCD.drawString("(" + color.getRed() + "," + color.getGreen() + "," + color.getBlue() + ")", 0, i+1);
-			}
 		}
 		
 		int redAvg = red/Globals.colorSensorSamples;

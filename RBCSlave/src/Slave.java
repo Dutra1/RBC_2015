@@ -1,5 +1,6 @@
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
+import lejos.nxt.Button;
 import lejos.nxt.LCD;
 
 public class Slave {
@@ -10,6 +11,8 @@ public class Slave {
 	public static void main(String argv[]) {
        
         LCD.drawString("Kicker!", 0, 0);
+        
+        Button.waitForAnyPress();
 
         compassValue = 0;
         comm = new Communication();

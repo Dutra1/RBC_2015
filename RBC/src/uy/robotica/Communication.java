@@ -22,7 +22,7 @@ public class Communication extends Thread {
 	  
 	  super.run();
 	  
-	  this.connection = RS485.getConnector().connect("NXT", RS485Connection.PACKET);
+	  this.connection = RS485.getConnector().connect("rbc5_2", RS485Connection.PACKET);
 		
 	  while (true) {
 		  try{
