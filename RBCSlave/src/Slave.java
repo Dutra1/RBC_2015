@@ -15,8 +15,8 @@ public class Slave {
         Button.waitForAnyPress();
 
         compassValue = 0;
-        comm = new Communication();
-        comm.start();
+        //comm = new Communication();
+        //comm.start();
         
         Behavior senseColor = new SenseAndKick();
         

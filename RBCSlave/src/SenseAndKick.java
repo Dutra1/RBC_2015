@@ -1,5 +1,4 @@
 import lejos.nxt.ColorSensor;
-import lejos.nxt.LCD;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.ColorSensor.Color;
 import lejos.robotics.subsumption.Behavior;

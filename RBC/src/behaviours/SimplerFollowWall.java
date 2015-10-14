@@ -84,10 +84,10 @@ public class SimplerFollowWall implements Behavior{
 			//Too off course! Adjust
 			if (angleDifference > 0) {
 				//Turn right
-				pilot.arc(-Globals.turnRadius, 5);
+				pilot.arcForward(-Globals.turnRadius);
 			} else {
 				//Turn left
-				pilot.arc(Globals.turnRadius, 5);
+				pilot.arcForward(Globals.turnRadius);
 			}
 		} else {
 			//On our way!

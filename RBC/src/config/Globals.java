@@ -32,15 +32,15 @@ public class Globals{
 	
 	//General Navigation
 	public static final int backwardsDistance = 10;
-	public static final int wallDistance = 150; //mm
+	public static final int wallDistance = 120; //mm
 		
 	//Vector Navigation
 	public static int desiredAngle = 90;
 	public static final int minimunWallDistance = 50;
 	
 	//Simple Navigation
-	public static int distanceTolerance = 50; //mm
-	public static int turnAngle = 30;
-	public static int angleTolerance = 10;
-	public static int turnRadius = 10;
+	public static int distanceTolerance = 40; //mm
+	public static int turnAngle = 20;
+	public static int angleTolerance = 15;
+	public static int turnRadius = 7;
 }

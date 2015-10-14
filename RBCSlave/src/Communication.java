@@ -20,7 +20,11 @@ public class Communication extends Thread {
 		  
 		super.run();
 		
-		this.connection = RS485.getConnector().waitForConnection(0,RS485Connection.PACKET);
+		try {
+			this.connection = RS485.getConnector().waitForConnection(0,RS485Connection.PACKET);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		while (true) {
 			try{	
