@@ -1,26 +1,28 @@
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
+import lejos.nxt.Button;
 import lejos.nxt.LCD;
 
 public class Slave {
 	
-	public static BallColor ballColor = BallColor.NOTHING;
 	public static Communication comm;
+	public static int compassValue;
 	
 	public static void main(String argv[]) {
        
         LCD.drawString("Kicker!", 0, 0);
         
-        comm = new Communication();
-        comm.start();
+        Button.waitForAnyPress();
+
+        compassValue = 0;
+        //comm = new Communication();
+        //comm.start();
         
-        Behavior kick = new Kick();
-        Behavior letGo = new LetGo();
-        Behavior senseColor = new SenseColor();
+        Behavior senseColor = new SenseAndKick();
         
-        Behavior[] hierarchy = {senseColor, letGo, kick};
-        Arbitrator larrionda = new Arbitrator(hierarchy);
-        larrionda.start();
+        Behavior[] hierarchy = {senseColor};
+        Arbitrator arbitrator = new Arbitrator(hierarchy);
+        arbitrator.start();
 	}
 }
 

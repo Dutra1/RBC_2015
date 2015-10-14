@@ -8,6 +8,7 @@ public class Globals{
 	public static final boolean debug = true;	
 	
 	//Color Sensor
+
 	public static final SensorPort colorPort = SensorPort.S3;
 	public static final boolean enableColorSensorFL = true;
 	public static final int colorSensorFLColor = Color.WHITE;
@@ -21,9 +22,8 @@ public class Globals{
 	public static final int[] purpleColorRanges = {50,120, 40,80, 60,120};
 	
 	//Compass
-	public static final SensorPort compassPort = SensorPort.S1;
-	public static final int idealAngle = 90;
-	public static final int allowedAngleError = 20;
+	public static final int idealAngle = 270;
+	public static final int allowedAngleError = 30;
 	
 	//Kicker
 	public static final NXTRegulatedMotor kicker = Motor.C;
@@ -32,6 +32,6 @@ public class Globals{
 	public static final int kickerGearReduction = 3;
 	public static final int msAfterKick = 100;
 	
-	//Lineal
+	//Linear
 	//public static final Linear
 }

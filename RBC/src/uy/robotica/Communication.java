@@ -3,7 +3,6 @@ package uy.robotica;
 import java.io.*;
 
 import config.Globals;
-import lejos.nxt.LCD;
 import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.comm.*;
 
@@ -11,9 +10,10 @@ public class Communication extends Thread {
 
 	private DataOutputStream output;
 	private NXTConnection connection = null;
+	private CompassHTSensor compass;
 	
 	public Communication(){
-
+		compass = new CompassHTSensor(Globals.compassPort);
 	}
 	
 	
@@ -22,16 +22,14 @@ public class Communication extends Thread {
 	  
 	  super.run();
 	  
-	  this.connection = RS485.getConnector().connect("NXT", RS485Connection.PACKET);
+	  while (this.connection == null)
+		  this.connection = RS485.getConnector().connect("rbc5_2", RS485Connection.PACKET);
 		
 	  while (true) {
 		  try{
 	           output = connection.openDataOutputStream();           
 	           
-	               try {
-	            	   
-	            	   CompassHTSensor compass = new CompassHTSensor(Globals.compassPort);
-	           		
+	               try {        		
 	            	   int compassValue = (int) Commons.getCompassAngle(compass);
 	            	   
 	            	   output.writeInt(compassValue);

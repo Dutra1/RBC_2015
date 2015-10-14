@@ -20,7 +20,11 @@ public class Communication extends Thread {
 		  
 		super.run();
 		
-		this.connection = RS485.getConnector().waitForConnection(0,RS485Connection.PACKET);
+		try {
+			this.connection = RS485.getConnector().waitForConnection(0,RS485Connection.PACKET);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		while (true) {
 			try{	
@@ -29,6 +33,7 @@ public class Communication extends Thread {
 		        try {
 		        	
 		        	int read = input.readInt();
+		        	if ((read >= 0) && (read < 360)) Slave.compassValue = read;
 		        	System.out.println(read);
 		        	    	
 		        }
