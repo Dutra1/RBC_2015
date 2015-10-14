@@ -16,6 +16,8 @@ public class Robot {
 
 	public static boolean holding = false;
 	public static Communication comm;
+	public static CommDebugger commdebugger;
+	public static String behavior;
 	
 	public Robot(){
 		
@@ -42,6 +44,9 @@ public class Robot {
 		Behavior [] bArray = {b1};
 		Arbitrator a = new Arbitrator(bArray);
 		a.start();
+		
+		commdebugger = new CommDebugger();
+	    commdebugger.start();
 		
 	}
 	

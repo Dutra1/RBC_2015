@@ -8,7 +8,7 @@ public class Globals{
 	public static final boolean debug = true;	
 	
 	//Color Sensor
-	public static final SensorPort colorPort = SensorPort.S4;
+	public static final SensorPort colorPort = SensorPort.S3;
 	public static final boolean enableColorSensorFL = true;
 	public static final int colorSensorFLColor = Color.WHITE;
 	public static final int colorSensorSamples = 5;

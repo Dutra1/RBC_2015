@@ -1,5 +1,4 @@
 
-import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
@@ -14,18 +13,19 @@ import lejos.pc.comm.NXTInfo;
 public class Comm extends Thread {
 
 
-	NXTComm nxtComm ;
+	NXTComm connection ;
+	DataInputStream input;
 	
 	public Comm(){
 
 		try {
-			//this.connection = USB.waitForConnection();
-			this.nxtComm = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
+		
+			this.connection = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
 			  
-			NXTInfo nxtInfo = new NXTInfo(NXTCommFactory.BLUETOOTH, "NXT", "00:16:53:0D:32:25");
+			NXTInfo nxtInfo = new NXTInfo(NXTCommFactory.BLUETOOTH, "NXT", "00:16:53:10:31:55");
 			  		  
 			try{
-				nxtComm.open(nxtInfo);
+				this.connection.open(nxtInfo);
 				System.out.println("Conectado!");
 			}
 			catch (NXTCommException e) {
@@ -43,14 +43,12 @@ public class Comm extends Thread {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				
-				Command.textWorld.setText(data[0]);
-				Command.textBehavior.setText(data[1]);
-				Command.textX.setText(data[2]);
-				Command.textY.setText(data[3]);
-				Command.textAngle.setText(data[4]);
-				Command.map.setRobotPosition(Integer.parseInt(data[2]), Integer.parseInt(data[3]),(int)Float.parseFloat(data[4]));
-				Command.map.repaint();
-				Command.progressBattery.setValue((int)(Float.parseFloat(data[5])*1000));
+				Command.textBehavior.setText(data[0]);
+				Command.textCompass.setText(data[1]);
+				Command.textDistance.setText(data[2]);
+				Command.progressBattery.setValue((int)(Float.parseFloat(data[3])*1000));
+				Command.progressSpeed.setValue((int)(Float.parseFloat(data[4])*1000));
+				Command.messageArea.append("Hola");
 			}
 		});		
 	}
@@ -65,9 +63,8 @@ public class Comm extends Thread {
 		while (true) {
 			
 			try{
-				DataInputStream input = new DataInputStream(nxtComm.getInputStream());
-							
-				
+				input = new DataInputStream(connection.getInputStream());
+											
 		        try {
 		        	
 		        	int size = input.readInt();
@@ -88,7 +85,6 @@ public class Comm extends Thread {
 		           
 		        try {
 		        	input.close();
-		        	//output.close();
 		        	//nxtComm.close();
 		        }
 		        catch (IOException ioe){
@@ -102,7 +98,7 @@ public class Comm extends Thread {
 			
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep(100);
 			} 
 			catch (InterruptedException e) {
 				  e.printStackTrace();
