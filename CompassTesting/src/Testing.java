@@ -47,8 +47,8 @@ public class Testing {
 		
 		boolean stop = false;
 		while(!stop) {
-			LCD.clear(1);
-			LCD.drawString("Angle: " + compass.getDegreesCartesian(), 0, 1);
+			LCD.clear(3);
+			LCD.drawString("Angle: " + compass.getDegreesCartesian(), 0, 3);
 			//Sound.playTone((int) Math.abs(compass.getDegreesCartesian()) + 100, delay);
 			Delay.msDelay(delay);
 			

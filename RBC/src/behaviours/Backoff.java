@@ -5,7 +5,6 @@ import lejos.nxt.SensorPort;
 import lejos.nxt.TouchSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
-import uy.robotica.Robot;
 
 public class Backoff implements Behavior{
 	
@@ -24,8 +23,9 @@ public class Backoff implements Behavior{
 
 	@Override
 	public void action() {
+		pilot.setTravelSpeed(Globals.travelSpeed);
 		pilot.travel(-Globals.backwardsDistance, true);
-		Robot.hasToTurn = true;
+		pilot.stop();
 	}
 
 	@Override

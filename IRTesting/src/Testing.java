@@ -16,6 +16,7 @@ public class Testing {
 		LCD.drawString("IR testing", 0, 1);
 		LCD.drawString("Click to start", 0, 0);
 		Button.waitForAnyPress();
+		Delay.msDelay(500);
 		
 		//Test
 		LCD.clear();
@@ -23,8 +24,8 @@ public class Testing {
 		
 		boolean stop = false;
 		while(!stop) {
-			LCD.clear(1);
-			LCD.drawString("IR: " + ir.getDistance(), 0, 1);
+			LCD.clear(3);
+			LCD.drawString("IR: " + ir.getDistance(), 0, 3);
 			Delay.msDelay(delay);
 			
 			if (Button.readButtons() != 0) stop = true;

@@ -6,7 +6,6 @@ import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.addon.OpticalDistanceSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
-import uy.robotica.Robot;
 
 public class SimplerFollowWall implements Behavior{
 
@@ -34,31 +33,39 @@ public class SimplerFollowWall implements Behavior{
 		int irDistance = ir.getDistance();
 		
 		float wallAngle = getWallAngle(currentAngle);
-		double angleToWall = Math.abs(angleDifference(currentAngle, wallAngle));
-		double actualDistance = (irDistance + Globals.widthDistanceToCenter) * Math.cos(Math.toRadians(angleToWall))
+		double angleToWall = angleDifference(currentAngle, wallAngle);
+		double actualDistance = (irDistance - Globals.widthDistanceToCenter) * Math.cos(Math.toRadians(angleToWall))
 								+ (Globals.depthDistanceToCenter) * Math.sin(Math.toRadians(angleToWall));
 		
 		float angleDifference;
+		int angleTolerance;
+		int turnRadius;
 		if (actualDistance < Globals.wallDistance - Globals.distanceTolerance) {
 			//Too close! Back off
 			angleDifference = angleDifference(currentAngle, wallAngle - Globals.turnAngle);
+			angleTolerance = Globals.angleToleranceIncorrect;
+			turnRadius = Globals.turnRadiusIncorrect;
 		} else if (actualDistance > Globals.wallDistance + Globals.distanceTolerance) {
 			//Too far! Get closer
 			angleDifference = angleDifference(currentAngle, wallAngle + Globals.turnAngle);
+			angleTolerance = Globals.angleToleranceIncorrect;
+			turnRadius = Globals.turnRadiusIncorrect;
 		} else {
 			//Correct distance to wall
 			angleDifference = angleDifference(currentAngle, wallAngle);
+			angleTolerance = Globals.angleToleranceCorrect;
+			turnRadius = Globals.turnRadiusCorrect;
 		}
 		
-		if(Math.abs(angleDifference) > Globals.angleTolerance) {
+		if(Math.abs(angleDifference) > angleTolerance) {
 			//Too off course! Adjust
-			adjustAngle(angleDifference);
+			pilot.setTravelSpeed(Globals.rotateSpeed);
+			adjustAngle(angleDifference, turnRadius);
 		} else {
 			//On our way!
+			pilot.setTravelSpeed(Globals.travelSpeed);
 			pilot.forward();
 		}
-		
-		Robot.hasToTurn = true;
 	}
 
 	@Override
@@ -85,13 +92,13 @@ public class SimplerFollowWall implements Behavior{
 		return minus;
 	}
 	
-	public void adjustAngle(float angleDifference) {
+	public void adjustAngle(float angleDifference, int turnRadius) {
 		if (angleDifference > 0) {
 			//Turn right
-			pilot.arcForward(-Globals.turnRadius);
+			pilot.arcForward(-turnRadius);
 		} else {
 			//Turn left
-			pilot.arcForward(Globals.turnRadius);
+			pilot.arcForward(turnRadius);
 		}
 	}
 
