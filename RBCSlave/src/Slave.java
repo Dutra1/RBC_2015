@@ -13,14 +13,15 @@ public class Slave {
         LCD.drawString("Kicker!", 0, 0);
         
         Button.waitForAnyPress();
+        LCD.clear();
 
         compassValue = 0;
-        //comm = new Communication();
-        //comm.start();
+        comm = new Communication();
+        comm.start();
         
-        Behavior senseColor = new SenseAndKick();
+        Behavior senseAndKick = new SenseAndKick();
         
-        Behavior[] hierarchy = {senseColor};
+        Behavior[] hierarchy = {senseAndKick};
         Arbitrator arbitrator = new Arbitrator(hierarchy);
         arbitrator.start();
 	}

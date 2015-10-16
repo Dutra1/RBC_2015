@@ -4,7 +4,6 @@ import lejos.nxt.Motor;
 import lejos.nxt.MotorPort;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
-import lejos.nxt.Sound;
 import lejos.nxt.TachoMotorPort;
 import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.addon.LnrActrFirgelliNXT;
@@ -27,7 +26,7 @@ public class Testing {
 		
 		//Start
 		LCD.drawString("Compass testing", 0, 1);
-		LCD.drawString("Click any button to start", 0, 0);
+		LCD.drawString("Click to start", 0, 0);
 		Button.waitForAnyPress();
 		
 		//Raise mast
@@ -44,13 +43,13 @@ public class Testing {
 		//Test
 		compass.resetCartesianZero();
 		LCD.clear();
-		LCD.drawString("Click any button to stop", 0, 0);
+		LCD.drawString("Click to stop", 0, 0);
 		
 		boolean stop = false;
 		while(!stop) {
 			LCD.clear(1);
 			LCD.drawString("Angle: " + compass.getDegreesCartesian(), 0, 1);
-			Sound.playTone((int) Math.abs(compass.getDegreesCartesian()) + 100, delay);
+			//Sound.playTone((int) Math.abs(compass.getDegreesCartesian()) + 100, delay);
 			Delay.msDelay(delay);
 			
 			if (Button.readButtons() != 0) stop = true;

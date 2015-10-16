@@ -31,16 +31,18 @@ public class Globals{
 	public static final NXTRegulatedMotor scoopMotor = Motor.C;
 	
 	//General Navigation
-	public static final int backwardsDistance = 10;
-	public static final int wallDistance = 120; //mm
+	public static final int backwardsDistance = 100;
+	public static final int wallDistance = 150; //mm
 		
 	//Vector Navigation
-	public static int desiredAngle = 90;
+	public static final int desiredAngle = 90;
 	public static final int minimunWallDistance = 50;
 	
 	//Simple Navigation
-	public static int distanceTolerance = 40; //mm
-	public static int turnAngle = 20;
-	public static int angleTolerance = 15;
-	public static int turnRadius = 7;
+	public static final int distanceTolerance = 20; //mm
+	public static final int turnAngle = 30;
+	public static final int angleTolerance = 5;
+	public static final int turnRadius = 10;
+	public static final int widthDistanceToCenter = 120; //mm
+	public static final int depthDistanceToCenter = 70; //mm
 }

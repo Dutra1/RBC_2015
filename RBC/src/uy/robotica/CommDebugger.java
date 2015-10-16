@@ -1,10 +1,7 @@
 package uy.robotica;
 
 import java.io.*;
-
-import lejos.nxt.*;
 import lejos.nxt.comm.*;
-import lejos.robotics.navigation.Pose;
 
 public class CommDebugger extends Thread {
 

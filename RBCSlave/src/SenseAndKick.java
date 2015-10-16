@@ -52,6 +52,10 @@ public class SenseAndKick implements Behavior{
 		double distance = 0.0;
 		
 		//Distancias ponderadas segun la variancia en el rango
+		if ((red == 0) || (green == 0) || (blue == 0)) {
+			red++; green++; blue++;
+		}
+		
 		distance += Math.abs( red  / green - ((range[1] + range[0]) / 2) / ((range[3] + range[2]) / 2));
 		distance += Math.abs(green / blue  - ((range[3] + range[2]) / 2) / ((range[5] + range[4]) / 2));
 		distance += Math.abs(blue  /  red  - ((range[5] + range[4]) / 2) / ((range[1] + range[0]) / 2));

@@ -1,7 +1,10 @@
 package uy.robotica;
 
-import behaviours.FollowWall;
+import behaviours.Backoff;
+import behaviours.DropLoader;
+import behaviours.LiftLoader;
 import behaviours.SimplerFollowWall;
+import behaviours.Turn;
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
 import lejos.robotics.navigation.DifferentialPilot;
@@ -14,40 +17,40 @@ public class Robot {
 	
 	public static DifferentialPilot pilot;
 
-	public static boolean holding = false;
 	public static Communication comm;
 	public static CommDebugger commdebugger;
 	public static String behavior;
 	
-	public Robot(){
-		
-	}
-	
+	//State?
+	public static boolean hasToTurn = false;
 	
 	public static void main(String argv[]) {
 
 		pilot = new DifferentialPilot(Globals.wheelDiameter, Globals.trackWidth, Globals.leftMotor, Globals.rightMotor, true);
-
-		//Music music = new Music();
-		//music.playMarioDeath();
+		Globals.scoopMotor.setSpeed(Globals.scoopSpeed);
 		
 		LCD.drawString(Globals.introMsg, 0, 0);
 		LCD.drawString(Globals.pressButton, 0, 1);
 		
+		Button.waitForAnyPress();
+		LCD.clear();
+		
 		comm = new Communication();
 	    comm.start();
-	        
-		Button.waitForAnyPress();
-		
-		//Behavior b1 = new FollowWall(pilot,Globals.compassPort,Globals.irPort,Globals.touchPort);
-		Behavior b1 = new SimplerFollowWall(pilot, Globals.irPort, Globals.touchPort, Globals.compassPort);
-		Behavior [] bArray = {b1};
-		Arbitrator a = new Arbitrator(bArray);
-		a.start();
-		
-		commdebugger = new CommDebugger();
+	    
+	    commdebugger = new CommDebugger();
 	    commdebugger.start();
 		
+		Behavior sfw = new SimplerFollowWall(pilot, Globals.irPort, Globals.compassPort);
+		Behavior t = new Turn(pilot);
+		Behavior dl = new DropLoader(Globals.scoopMotor);
+		Behavior ll = new LiftLoader(pilot, Globals.scoopMotor, Globals.touchPort);
+		Behavior bo = new Backoff(pilot, Globals.touchPort);
+		
+		//Behavior [] hierarchy = {sfw};
+		Behavior [] hierarchy = {sfw, t, dl, ll, bo};
+		Arbitrator arbitrator = new Arbitrator(hierarchy);
+		arbitrator.start();
 	}
 	
 	
