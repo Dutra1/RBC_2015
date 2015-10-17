@@ -23,9 +23,10 @@ public class Backoff implements Behavior{
 
 	@Override
 	public void action() {
-		pilot.setTravelSpeed(Globals.travelSpeed);
-		pilot.travel(-Globals.backwardsDistance, true);
-		pilot.stop();
+		if (touch.isPressed()) {
+			pilot.setTravelSpeed(Globals.travelSpeed);
+			pilot.travel(-Globals.backwardsDistance, false);
+		}
 	}
 
 	@Override

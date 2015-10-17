@@ -13,7 +13,7 @@ public class DropLoader implements Behavior{
 	
 	@Override
 	public boolean takeControl() {
-		return !scoop.isMoving() && scoop.getTachoCount() <= -10;
+		return !scoop.isMoving() && scoop.getTachoCount() <= -150;
 	}
 
 	@Override

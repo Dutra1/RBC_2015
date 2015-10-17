@@ -24,7 +24,7 @@ public class Turn implements Behavior{
 	@Override
 	public void action() {
 		pilot.setTravelSpeed(Globals.rotateSpeed);
-		pilot.arc(-Globals.backwardsDistance + (Globals.wallDistance - Globals.widthDistanceToCenter), 90, false);
+		pilot.arc(-Globals.rotateRadius, -90, false);
 		pilot.setTravelSpeed(Globals.travelSpeed);
 		pilot.forward();
 	}

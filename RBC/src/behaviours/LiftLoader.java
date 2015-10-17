@@ -21,7 +21,7 @@ public class LiftLoader implements Behavior{
 	
 	@Override
 	public boolean takeControl() {
-		return pilot.getMovementIncrement() < 0 && !touch.isPressed() && scoop.getTachoCount() > -10;
+		return !pilot.isMoving() && !touch.isPressed() && scoop.getTachoCount() > -30;
 	}
 
 	@Override
