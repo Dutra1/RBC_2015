@@ -1,4 +1,5 @@
 import lejos.nxt.Motor;
+import lejos.nxt.MotorPort;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
 import lejos.robotics.Color;
@@ -8,7 +9,6 @@ public class Globals{
 	public static final boolean debug = true;	
 	
 	//Color Sensor
-
 	public static final SensorPort colorPort = SensorPort.S3;
 	public static final boolean enableColorSensorFL = true;
 	public static final int colorSensorFLColor = Color.WHITE;
@@ -33,5 +33,5 @@ public class Globals{
 	public static final int msAfterKick = 100;
 	
 	//Linear
-	//public static final Linear
+	public static final MotorPort mastMotor = MotorPort.B;
 }

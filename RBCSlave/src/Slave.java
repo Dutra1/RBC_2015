@@ -19,9 +19,10 @@ public class Slave {
         comm = new Communication();
         comm.start();
         
+        Behavior raiseMast = new RaiseMast();
         Behavior senseAndKick = new SenseAndKick();
         
-        Behavior[] hierarchy = {senseAndKick};
+        Behavior[] hierarchy = {senseAndKick, raiseMast};
         Arbitrator arbitrator = new Arbitrator(hierarchy);
         arbitrator.start();
 	}

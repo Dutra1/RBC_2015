@@ -39,13 +39,13 @@ public class Robot {
 		Button.waitForAnyPress();
 		LCD.clear();
 		
-		/*comm = new Communication();
+		comm = new Communication();
 	    comm.start();
 	    
-	    commdebugger = new CommDebugger();
+	    /*commdebugger = new CommDebugger();
 	    commdebugger.start();*/
 		
-		Behavior esfw = new EvenSimplerFollowWall(pilot);
+		//Behavior esfw = new EvenSimplerFollowWall(pilot);
 		Behavior sfw = new SimplerFollowWall(pilot, Globals.irPort, Globals.compassPort);
 		Behavior t = new Turn(pilot, Globals.touchPort);
 		Behavior dl = new DropLoader(Globals.scoopMotor);
@@ -53,8 +53,8 @@ public class Robot {
 		Behavior bo = new Backoff(pilot, Globals.touchPort);
 		
 		//Behavior [] hierarchy = {sfw};
-		//Behavior [] hierarchy = {sfw, t, dl, ll, bo};
-		Behavior [] hierarchy = {esfw, t, dl, ll, bo};
+		Behavior [] hierarchy = {sfw, t, dl, ll, bo};
+		//Behavior [] hierarchy = {esfw, t, dl, ll, bo};
 		Arbitrator arbitrator = new Arbitrator(hierarchy);
 		arbitrator.start();
 	}
