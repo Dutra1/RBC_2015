@@ -9,24 +9,23 @@ import lejos.robotics.subsumption.Behavior;
 public class Backoff implements Behavior{
 	
 	private DifferentialPilot pilot;
-	private TouchSensor touch;
+	private SensorPort touchPort;
 	
 	public Backoff (DifferentialPilot pilot, SensorPort touchPort) {
 		this.pilot = pilot;
-		this.touch = new TouchSensor(touchPort);
+		this.touchPort = touchPort;
 	}
 
 	@Override
 	public boolean takeControl() {
+		TouchSensor touch = new TouchSensor(touchPort);
 		return touch.isPressed();
 	}
 
 	@Override
 	public void action() {
-		if (touch.isPressed()) {
-			pilot.setTravelSpeed(Globals.travelSpeed);
-			pilot.travel(-Globals.backwardsDistance, true);
-		}
+		pilot.quickStop();
+		pilot.travel(-Globals.backwardsDistance, true);
 	}
 
 	@Override

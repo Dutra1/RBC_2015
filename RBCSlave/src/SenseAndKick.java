@@ -16,6 +16,8 @@ public class SenseAndKick implements Behavior{
 		this.kicker = kicker;
 		this.cs = Globals.enableColorSensorFL ? new ColorSensor(colorPort, Globals.colorSensorFLColor) : new ColorSensor(colorPort);
 		this.compass = new CompassHTSensor(Globals.compassPort);
+		
+		compass.resetCartesianZero();
 	}
 	
 	@Override
@@ -32,8 +34,7 @@ public class SenseAndKick implements Behavior{
     		
     		if ((ballColor == BallColor.LIGHTBLUE) || (ballColor == BallColor.PURPLE)) {
     			kicker.setSpeed(Globals.letGoSpeed);
-    			kicker.rotate(60 / Globals.kickerGearReduction);
-    			kicker.rotate(-60 / Globals.kickerGearReduction);
+    			kicker.rotate(360 / Globals.kickerGearReduction);
     		} else if (ballColor == BallColor.ORANGE) {
     			if (isOriented(compass.getDegreesCartesian())) {
     				kicker.setSpeed(Globals.kickSpeed);
@@ -50,8 +51,9 @@ public class SenseAndKick implements Behavior{
 	public void suppress() {}
 
 	public static boolean isOriented(float compassValue) {
-		return (compassValue > Globals.idealAngle - Globals.allowedAngleError) && 
-			   (compassValue < Globals.idealAngle + Globals.allowedAngleError);
+		return true;
+		//return (compassValue > Globals.idealAngle - Globals.allowedAngleError) && 
+		//	   (compassValue < Globals.idealAngle + Globals.allowedAngleError);
 	}
 	
 	public static boolean isInRange(int red, int green, int blue, int[] range) {

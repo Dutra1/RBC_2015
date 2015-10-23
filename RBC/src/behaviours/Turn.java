@@ -5,6 +5,7 @@ import lejos.nxt.SensorPort;
 import lejos.nxt.TouchSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
+import lejos.util.Delay;
 
 public class Turn implements Behavior{
 
@@ -28,14 +29,17 @@ public class Turn implements Behavior{
 	public void action() {
 		pilot.setTravelSpeed(Globals.rotateSpeed);
 		if (nextTurn) {
-			pilot.steer(-100, 180);
+			//right
+			pilot.steer(-100, -180);
 		} else {
+			//left
 			pilot.steer(100, 180);
 		}
 		nextTurn = !nextTurn;
 		
 		pilot.setTravelSpeed(Globals.travelSpeed);
 		pilot.forward();
+		Delay.msDelay(Globals.isMovingDelay);
 	}
 
 	@Override

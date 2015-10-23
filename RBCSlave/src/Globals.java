@@ -23,7 +23,7 @@ public class Globals{
 	
 	//Compass
 	public static final SensorPort compassPort = SensorPort.S4;
-	public static final int idealAngle = 180;
+	public static final int idealAngle = 270;
 	public static final int allowedAngleError = 40;
 	
 	//Kicker

@@ -7,6 +7,6 @@ public class Testing {
 
 	public static void main(String argv[]) {
 		LnrActrFirgelliNXT mast = new LnrActrFirgelliNXT(mastMotor);
-		mast.moveTo(0, false);
+		mast.move(-200, false);
 	}
 }

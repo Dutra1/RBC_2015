@@ -31,7 +31,7 @@ public class Globals{
 	
 	//Speeds
 	public static final int travelSpeed = 25;
-	public static final int rotateSpeed = 15;
+	public static final int rotateSpeed = 20;
 	public static final int scoopSpeed = 175;
 	
 	//Navigation
@@ -44,6 +44,8 @@ public class Globals{
 	public static final int angleToleranceIncorrect = 6;
 	public static final int turnRadiusIncorrect = 16;
 	
-	public static final int backwardsDistance = 20;
-	public static final int rotateRadius = 10;
+	public static final int backwardsDistance = 15;
+	
+	//Misc
+	public static final int isMovingDelay = 50;
 }

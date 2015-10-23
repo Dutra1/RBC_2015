@@ -41,6 +41,8 @@ public class Robot {
 	    
 	    /*commdebugger = new CommDebugger();
 	    commdebugger.start();*/
+	    
+	    pilot.forward();
 		
 		Behavior esfw = new EvenSimplerFollowWall(pilot);
 		Behavior sfw = new SimplerFollowWall(pilot, Globals.irPort, Globals.compassPort);

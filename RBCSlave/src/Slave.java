@@ -2,7 +2,6 @@ import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
-import lejos.nxt.addon.LnrActrFirgelliNXT;
 
 public class Slave {
 	
