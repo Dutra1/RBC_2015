@@ -21,12 +21,13 @@ public class LiftLoader implements Behavior{
 	
 	@Override
 	public boolean takeControl() {
-		return !pilot.isMoving() && !touch.isPressed() && scoop.getTachoCount() > -30;
+		return pilot.isMoving() && (pilot.getMovementIncrement() < 0) && !touch.isPressed() && scoop.getTachoCount() > -30;
 	}
 
 	@Override
 	public void action() {
-		scoop.rotateTo(-Globals.scoopRotationAngle, true);
+		scoop.rotateTo(-Globals.scoopRotationAngle, false);
+		scoop.rotateTo(-5, false);
 	}
 
 	@Override

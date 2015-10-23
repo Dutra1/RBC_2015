@@ -18,7 +18,7 @@ public class DropLoader implements Behavior{
 
 	@Override
 	public void action() {
-		scoop.rotateTo(0, true);	
+		scoop.rotateTo(-5, true);	
 	}
 
 	@Override

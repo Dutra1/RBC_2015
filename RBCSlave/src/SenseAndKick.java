@@ -1,13 +1,22 @@
 import lejos.nxt.ColorSensor;
 import lejos.nxt.NXTRegulatedMotor;
+import lejos.nxt.SensorPort;
+import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.ColorSensor.Color;
 import lejos.robotics.subsumption.Behavior;
 import lejos.util.Delay;
 
 public class SenseAndKick implements Behavior{
 
-	private ColorSensor cs = Globals.enableColorSensorFL ? new ColorSensor(Globals.colorPort, Globals.colorSensorFLColor) : new ColorSensor(Globals.colorPort);
 	private NXTRegulatedMotor kicker = Globals.kicker;
+	private ColorSensor cs;
+	private CompassHTSensor compass;
+	
+	public SenseAndKick(NXTRegulatedMotor kicker, SensorPort colorPort, SensorPort compassPort) {
+		this.kicker = kicker;
+		this.cs = Globals.enableColorSensorFL ? new ColorSensor(colorPort, Globals.colorSensorFLColor) : new ColorSensor(colorPort);
+		this.compass = new CompassHTSensor(Globals.compassPort);
+	}
 	
 	@Override
 	public boolean takeControl() {
@@ -26,7 +35,7 @@ public class SenseAndKick implements Behavior{
     			kicker.rotate(60 / Globals.kickerGearReduction);
     			kicker.rotate(-60 / Globals.kickerGearReduction);
     		} else if (ballColor == BallColor.ORANGE) {
-    			if (isOriented()) {
+    			if (isOriented(compass.getDegreesCartesian())) {
     				kicker.setSpeed(Globals.kickSpeed);
     				kicker.rotate(-90 / Globals.kickerGearReduction);
     				kicker.rotate(450 / Globals.kickerGearReduction);
@@ -40,8 +49,9 @@ public class SenseAndKick implements Behavior{
 	@Override
 	public void suppress() {}
 
-	public static boolean isOriented() {
-		return Math.abs(Slave.compassValue - Globals.idealAngle) < Globals.allowedAngleError;
+	public static boolean isOriented(float compassValue) {
+		return (compassValue > Globals.idealAngle - Globals.allowedAngleError) && 
+			   (compassValue < Globals.idealAngle + Globals.allowedAngleError);
 	}
 	
 	public static boolean isInRange(int red, int green, int blue, int[] range) {
@@ -88,7 +98,9 @@ public class SenseAndKick implements Behavior{
 		
 		//Si no reconoce ninguno, busca en que este mas cerca
 		
-		double nothingDistance = getDistanceFromColorRange(redAvg, greenAvg, blueAvg, Globals.nothingColorRanges);
+		return BallColor.ORANGE;
+		
+		/*double nothingDistance = getDistanceFromColorRange(redAvg, greenAvg, blueAvg, Globals.nothingColorRanges);
 		double orangeDistance = getDistanceFromColorRange(redAvg, greenAvg, blueAvg, Globals.orangeColorRanges);
 		double lightblueDistance = getDistanceFromColorRange(redAvg, greenAvg, blueAvg, Globals.lightblueColorRanges);
 		double purpleDistance = getDistanceFromColorRange(redAvg, greenAvg, blueAvg, Globals.purpleColorRanges);
@@ -98,6 +110,6 @@ public class SenseAndKick implements Behavior{
 		if (nothingDistance == minDistance) return BallColor.NOTHING;
 		else if (orangeDistance == minDistance) return BallColor.ORANGE;
 		else if (lightblueDistance == minDistance) return BallColor.LIGHTBLUE;
-		else return BallColor.PURPLE;	
+		else return BallColor.PURPLE;*/	
 	}
 }

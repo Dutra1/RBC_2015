@@ -13,7 +13,6 @@ import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
 import config.Globals;
 
-
 public class Robot {
 	
 	public static DifferentialPilot pilot;
@@ -21,8 +20,6 @@ public class Robot {
 	public static Communication comm;
 	public static CommDebugger commdebugger;
 	public static String behavior;
-	
-	//State?
 	
 	public static void main(String argv[]) {
 
@@ -45,7 +42,7 @@ public class Robot {
 	    /*commdebugger = new CommDebugger();
 	    commdebugger.start();*/
 		
-		//Behavior esfw = new EvenSimplerFollowWall(pilot);
+		Behavior esfw = new EvenSimplerFollowWall(pilot);
 		Behavior sfw = new SimplerFollowWall(pilot, Globals.irPort, Globals.compassPort);
 		Behavior t = new Turn(pilot, Globals.touchPort);
 		Behavior dl = new DropLoader(Globals.scoopMotor);
@@ -53,8 +50,8 @@ public class Robot {
 		Behavior bo = new Backoff(pilot, Globals.touchPort);
 		
 		//Behavior [] hierarchy = {sfw};
-		Behavior [] hierarchy = {sfw, t, dl, ll, bo};
-		//Behavior [] hierarchy = {esfw, t, dl, ll, bo};
+		//Behavior [] hierarchy = {sfw, t, dl, ll, bo};
+		Behavior [] hierarchy = {esfw, t,/* dl,*/ ll, bo};
 		Arbitrator arbitrator = new Arbitrator(hierarchy);
 		arbitrator.start();
 	}
