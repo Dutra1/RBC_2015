@@ -33,11 +33,11 @@ public class Globals{
 	
 	//Speeds
 	public static final int travelSpeed = 25;
-	public static final int rotateSpeed = 20;
+	public static final int rotateSpeed = 30;
 	public static final int scoopSpeed = 175;
 	
 	//Navigation
-	public static final int objectDistance = 10; //cm
+	public static final int objectDistance = 20; //cm
 	public static final int distanceTolerance = 25; //mm
 	public static final int wallDistance = 100; //mm
 	
