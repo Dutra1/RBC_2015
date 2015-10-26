@@ -13,6 +13,14 @@ public class Turn implements Behavior{
 	private TouchSensor touch;
 	private boolean nextTurn; //0 left - 1 right
 	
+	public boolean isNextTurn() {
+		return nextTurn;
+	}
+
+	public void setNextTurn(boolean nextTurn) {
+		this.nextTurn = nextTurn;
+	}
+
 	public Turn (DifferentialPilot pilot, SensorPort touchPort) {
 		this.pilot = pilot;
 		this.touch = new TouchSensor(touchPort);

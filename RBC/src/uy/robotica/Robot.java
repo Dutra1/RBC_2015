@@ -44,16 +44,18 @@ public class Robot {
 	    
 	    pilot.forward();
 		
-		Behavior esfw = new EvenSimplerFollowWall(pilot);
+	    Turn turn = new Turn(pilot, Globals.touchPort);
+	    
 		Behavior sfw = new SimplerFollowWall(pilot, Globals.irPort, Globals.compassPort);
-		Behavior t = new Turn(pilot, Globals.touchPort);
+		Behavior t = turn;
 		Behavior dl = new DropLoader(Globals.scoopMotor);
 		Behavior ll = new LiftLoader(pilot, Globals.scoopMotor, Globals.touchPort);
 		Behavior bo = new Backoff(pilot, Globals.touchPort);
+		Behavior esfw = new EvenSimplerFollowWall(pilot, turn);
 		
 		//Behavior [] hierarchy = {sfw};
 		//Behavior [] hierarchy = {sfw, t, dl, ll, bo};
-		Behavior [] hierarchy = {esfw, t,/* dl,*/ ll, bo};
+		Behavior [] hierarchy = {esfw, t, dl, ll, bo};
 		Arbitrator arbitrator = new Arbitrator(hierarchy);
 		arbitrator.start();
 	}

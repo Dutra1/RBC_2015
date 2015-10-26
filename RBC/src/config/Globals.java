@@ -23,6 +23,8 @@ public class Globals{
 	public static final SensorPort touchPort =  SensorPort.S1;
 	public static final SensorPort irPort =  SensorPort.S2;
 	public static final SensorPort compassPort =  SensorPort.S3;
+	public static final SensorPort usR = SensorPort.S2;
+	public static final SensorPort usL = SensorPort.S3;
 	
 	//Motor Ports
 	public static final NXTRegulatedMotor leftMotor =  Motor.A;
@@ -35,7 +37,7 @@ public class Globals{
 	public static final int scoopSpeed = 175;
 	
 	//Navigation
-	public static final int wallDistance = 190; //mm
+	public static final int objectDistance = 10; //cm
 	public static final int distanceTolerance = 25; //mm
 	
 	public static final int turnAngle = 15;

@@ -19,13 +19,14 @@ public class Backoff implements Behavior{
 	@Override
 	public boolean takeControl() {
 		TouchSensor touch = new TouchSensor(touchPort);
-		return touch.isPressed();
+		return touch.isPressed() && pilot.getMovementIncrement() >= 0;
+		
 	}
 
 	@Override
 	public void action() {
-		pilot.quickStop();
-		pilot.travel(-Globals.backwardsDistance, true);
+		pilot.stop();
+		pilot.travel(-Globals.backwardsDistance, false);
 	}
 
 	@Override
