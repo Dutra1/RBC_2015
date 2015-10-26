@@ -13,7 +13,7 @@ public class Turn implements Behavior{
 	private TouchSensor touch;
 	private boolean nextTurn; //0 left - 1 right
 	
-	public boolean isNextTurn() {
+	public boolean getNextTurn() {
 		return nextTurn;
 	}
 

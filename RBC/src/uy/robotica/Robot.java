@@ -1,10 +1,8 @@
 package uy.robotica;
 
 import behaviours.Backoff;
-import behaviours.DropLoader;
-import behaviours.EvenSimplerFollowWall;
+import behaviours.Forward;
 import behaviours.LiftLoader;
-import behaviours.SimplerFollowWall;
 import behaviours.Turn;
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
@@ -43,19 +41,14 @@ public class Robot {
 	    commdebugger.start();*/
 	    
 	    pilot.forward();
-		
-	    Turn turn = new Turn(pilot, Globals.touchPort);
 	    
-		Behavior sfw = new SimplerFollowWall(pilot, Globals.irPort, Globals.compassPort);
-		Behavior t = turn;
-		Behavior dl = new DropLoader(Globals.scoopMotor);
+		Behavior f = new Forward(pilot);
+		Behavior t = new Turn(pilot, Globals.touchPort);
 		Behavior ll = new LiftLoader(pilot, Globals.scoopMotor, Globals.touchPort);
 		Behavior bo = new Backoff(pilot, Globals.touchPort);
-		Behavior esfw = new EvenSimplerFollowWall(pilot, turn);
 		
-		//Behavior [] hierarchy = {sfw};
-		//Behavior [] hierarchy = {sfw, t, dl, ll, bo};
-		Behavior [] hierarchy = {esfw, t, dl, ll, bo};
+
+		Behavior [] hierarchy = {f, t, ll, bo};
 		Arbitrator arbitrator = new Arbitrator(hierarchy);
 		arbitrator.start();
 	}

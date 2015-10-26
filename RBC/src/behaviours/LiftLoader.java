@@ -28,6 +28,7 @@ public class LiftLoader implements Behavior{
 	public void action() {
 		scoop.rotateTo(-Globals.scoopRotationAngle, false);
 		scoop.rotateTo(0, false);
+		scoop.flt();
 	}
 
 	@Override

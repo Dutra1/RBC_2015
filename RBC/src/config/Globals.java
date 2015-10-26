@@ -39,6 +39,7 @@ public class Globals{
 	//Navigation
 	public static final int objectDistance = 10; //cm
 	public static final int distanceTolerance = 25; //mm
+	public static final int wallDistance = 100; //mm
 	
 	public static final int turnAngle = 15;
 	public static final int angleToleranceCorrect = 2;
@@ -47,6 +48,7 @@ public class Globals{
 	public static final int turnRadiusIncorrect = 16;
 	
 	public static final int backwardsDistance = 15;
+	public static final int backDelay = 500;
 	
 	//Misc
 	public static final int isMovingDelay = 50;
