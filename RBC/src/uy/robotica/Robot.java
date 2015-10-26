@@ -42,7 +42,7 @@ public class Robot {
 	    
 	    pilot.forward();
 	    
-		Behavior f = new Forward(pilot);
+		Behavior f = new Forward(pilot, Globals.usL, Globals.usR);
 		Behavior t = new Turn(pilot, Globals.touchPort);
 		Behavior ll = new LiftLoader(pilot, Globals.scoopMotor, Globals.touchPort);
 		Behavior bo = new Backoff(pilot, Globals.touchPort);
