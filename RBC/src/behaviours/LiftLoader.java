@@ -17,11 +17,13 @@ public class LiftLoader implements Behavior{
 		this.pilot = pilot;
 		this.scoop = scoop;
 		this.touch = new TouchSensor(touchPort);
+		
+		this.scoop.setSpeed(Globals.scoopSpeed);
 	}
 	
 	@Override
 	public boolean takeControl() {
-		return pilot.isMoving() && (pilot.getMovementIncrement() < 0) && !touch.isPressed() && scoop.getTachoCount() > -30;
+		return pilot.isMoving() && (pilot.getMovementIncrement() < 0) && (Math.abs(pilot.getAngleIncrement()) < 30) && !touch.isPressed() && scoop.getTachoCount() > -30;
 	}
 
 	@Override

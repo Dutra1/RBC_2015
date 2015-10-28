@@ -34,8 +34,8 @@ public class SimplerFollowWall implements Behavior{
 		
 		float wallAngle = getWallAngle(currentAngle);
 		double angleToWall = angleDifference(currentAngle, wallAngle);
-		double actualDistance = (irDistance - Globals.widthDistanceToCenter) * Math.cos(Math.toRadians(angleToWall))
-								+ (Globals.depthDistanceToCenter) * Math.sin(Math.toRadians(angleToWall));
+		double actualDistance = (irDistance/* - Globals.widthDistanceToCenter*/) * Math.cos(Math.toRadians(angleToWall))
+								/*+ Globals.depthDistanceToCenter * Math.sin(Math.toRadians(angleToWall))*/;
 		
 		float angleDifference;
 		int angleTolerance;

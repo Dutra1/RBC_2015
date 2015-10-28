@@ -9,7 +9,7 @@ import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.addon.LnrActrFirgelliNXT;
 import lejos.util.Delay;
 
-public class Testing {
+public class CompassTesting {
 
 	public static final NXTRegulatedMotor leftMotor =  Motor.A;
 	public static final NXTRegulatedMotor rightMotor =  Motor.B;

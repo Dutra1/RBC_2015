@@ -10,16 +10,17 @@ public class Globals{
 	
 	//Color Sensor
 	public static final SensorPort colorPort = SensorPort.S3;
-	public static final boolean enableColorSensorFL = true;
+	public static final boolean enableColorSensorFL = false;
 	public static final int colorSensorFLColor = Color.WHITE;
 	public static final int colorSensorSamples = 5;
 	public static final int msBallInPosition = 500;
 	public static final int msBetweenReadings = 50;
 	
-	public static final int[] nothingColorRanges = {0,15, 0,15, 0,15};
-	public static final int[] orangeColorRanges = {70,130, 70,140, 20,70};
-	public static final int[] lightblueColorRanges = {100,160, 100,180, 80,150};
-	public static final int[] purpleColorRanges = {50,120, 40,80, 60,120};
+	//Relations - Measure correctly!
+	public static final float[] orangeColorRelations = {0.95f, 2.1f, 0.5f};
+	public static final float[] yellowColorRelations = {0.85f, 1.05f, 1.15f};
+	public static final float[] lightBlueColorRelations = {0.85f, 1.3f, 0.8f};
+	public static final float[] purpleColorRelations = {1.5f, 0.66f, 1};
 	
 	//Compass
 	public static final SensorPort compassPort = SensorPort.S4;

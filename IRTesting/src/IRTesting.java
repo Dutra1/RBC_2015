@@ -4,7 +4,7 @@ import lejos.nxt.SensorPort;
 import lejos.nxt.addon.OpticalDistanceSensor;
 import lejos.util.Delay;
 
-public class Testing {
+public class IRTesting {
 	
 	public static final SensorPort irPort =  SensorPort.S2;
 	public static final int delay = 100;

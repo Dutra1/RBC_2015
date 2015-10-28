@@ -2,7 +2,6 @@ package behaviours;
 
 import config.Globals;
 import lejos.nxt.SensorPort;
-import lejos.nxt.Sound;
 import lejos.nxt.UltrasonicSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
@@ -31,23 +30,35 @@ public class Forward implements Behavior{
 	public void action() {
 		supressed = false;
 		pilot.forward();
+		int minLeftDistance = 500;
+		int minRightDistance = 500;
+		
 		while(!supressed) {
 			int dl = usL.getDistance();
 			int dr = usR.getDistance();
-			if(dr < Globals.objectDistance){
-				Turn.setNextTurn(false); //izquierda
-			} else if(dl < Globals.objectDistance){
-				Turn.setNextTurn(true); //derecha
-			}
+			
+			if (dl < minLeftDistance) minLeftDistance = dl;
+			if (dr < minRightDistance) minRightDistance = dr;
+			
 			Thread.yield();
 		}
+		
+		if(minLeftDistance < Globals.minObjectDistance){
+			Turn.setNextTurnRight();
+		} else if(minRightDistance < Globals.minObjectDistance){
+			Turn.setNextTurnLeft();
+		} else if (minLeftDistance > Globals.maxObjectDistance) {
+			Turn.setNextTurnLeft();
+		} else if (minRightDistance > Globals.maxObjectDistance) {
+			Turn.setNextTurnRight();
+		}
+		
 		pilot.stop();
 	}
 
 	@Override
 	public void suppress() {
 		supressed = true;
-		Sound.beep();
 		pilot.stop();
 	}
 }

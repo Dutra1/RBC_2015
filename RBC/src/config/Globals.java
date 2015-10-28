@@ -14,9 +14,7 @@ public class Globals{
 	
 	//Mechanics
 	public static final float wheelDiameter = 3.0f;
-	public static final float trackWidth = 19f;
-	public static final int widthDistanceToCenter = 90; //mm
-	public static final int depthDistanceToCenter = 65; //mm
+	public static final float trackWidth = 18.5f;
 	public static final int scoopRotationAngle = 180;
 	
 	//Sensor Ports
@@ -37,7 +35,6 @@ public class Globals{
 	public static final int scoopSpeed = 175;
 	
 	//Navigation
-	public static final int objectDistance = 20; //cm
 	public static final int distanceTolerance = 25; //mm
 	public static final int wallDistance = 100; //mm
 	
@@ -48,8 +45,12 @@ public class Globals{
 	public static final int turnRadiusIncorrect = 16;
 	
 	public static final int backwardsDistance = 15;
-	public static final int backDelay = 500;
 	
-	//Misc
-	public static final int isMovingDelay = 50;
+	//Flocking
+	public static final int minObjectDistance = 20; //cm
+	public static final int maxObjectDistance = 150; //cm
+	
+	//Delays
+	public static final int isMovingDelay = 100;
+	public static final int backDelay = 500;
 }

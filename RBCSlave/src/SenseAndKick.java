@@ -1,6 +1,7 @@
 import lejos.nxt.ColorSensor;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
 import lejos.nxt.addon.CompassHTSensor;
 import lejos.nxt.ColorSensor.Color;
 import lejos.robotics.subsumption.Behavior;
@@ -35,7 +36,7 @@ public class SenseAndKick implements Behavior{
     		if ((ballColor == BallColor.LIGHTBLUE) || (ballColor == BallColor.PURPLE)) {
     			kicker.setSpeed(Globals.letGoSpeed);
     			kicker.rotate(360 / Globals.kickerGearReduction);
-    		} else if (ballColor == BallColor.ORANGE) {
+    		} else if ((ballColor == BallColor.ORANGE) || (ballColor == BallColor.YELLOW)) {
     			if (isOriented(compass.getDegreesCartesian())) {
     				kicker.setSpeed(Globals.kickSpeed);
     				kicker.rotate(-90 / Globals.kickerGearReduction);
@@ -56,25 +57,6 @@ public class SenseAndKick implements Behavior{
 		//	   (compassValue < Globals.idealAngle + Globals.allowedAngleError);
 	}
 	
-	public static boolean isInRange(int red, int green, int blue, int[] range) {
-		return (red > range[0]) && (red < range[1]) && (green > range[2]) && (green < range[3]) && (blue > range[4]) && (blue < range[5]);
-	}
-	
-	public static double getDistanceFromColorRange(int red, int green, int blue, int[] range) {
-		double distance = 0.0;
-		
-		//Distancias ponderadas segun la variancia en el rango
-		if ((red == 0) || (green == 0) || (blue == 0)) {
-			red++; green++; blue++;
-		}
-		
-		distance += Math.abs( red  / green - ((range[1] + range[0]) / 2) / ((range[3] + range[2]) / 2));
-		distance += Math.abs(green / blue  - ((range[3] + range[2]) / 2) / ((range[5] + range[4]) / 2));
-		distance += Math.abs(blue  /  red  - ((range[5] + range[4]) / 2) / ((range[1] + range[0]) / 2));
-				
-		return distance;
-	}
-	
 	public static BallColor getBallColor(ColorSensor cs){	
 		
 		//Get multiple readings
@@ -93,25 +75,63 @@ public class SenseAndKick implements Behavior{
 		int greenAvg = green/Globals.colorSensorSamples;
 		int blueAvg = blue/Globals.colorSensorSamples;
 		
-		if (isInRange(redAvg, greenAvg, blueAvg, Globals.nothingColorRanges)) return BallColor.NOTHING;
-		if (isInRange(redAvg, greenAvg, blueAvg, Globals.orangeColorRanges)) return BallColor.ORANGE;
-		if (isInRange(redAvg, greenAvg, blueAvg, Globals.lightblueColorRanges)) return BallColor.LIGHTBLUE;
-		if (isInRange(redAvg, greenAvg, blueAvg, Globals.purpleColorRanges)) return BallColor.PURPLE;
+		if (isNothing(redAvg, greenAvg, blueAvg)) return BallColor.NOTHING;
+		if (isOrange(redAvg, greenAvg, blueAvg)) return BallColor.ORANGE;
+		if (isYellow(redAvg, greenAvg, blueAvg)) return BallColor.YELLOW;
+		if (isPurple(redAvg, greenAvg, blueAvg)) return BallColor.PURPLE;
+		if (isLightBlue(redAvg, greenAvg, blueAvg)) return BallColor.LIGHTBLUE;
 		
 		//Si no reconoce ninguno, busca en que este mas cerca
+		Sound.beep();
 		
-		return BallColor.ORANGE;
+		double orangeDistance = getDistanceFromColor(redAvg, greenAvg, blueAvg, Globals.orangeColorRelations);
+		double yellowDistance = getDistanceFromColor(redAvg, greenAvg, blueAvg, Globals.yellowColorRelations);
+		double lightblueDistance = getDistanceFromColor(redAvg, greenAvg, blueAvg, Globals.lightBlueColorRelations);
+		double purpleDistance = getDistanceFromColor(redAvg, greenAvg, blueAvg, Globals.purpleColorRelations);
 		
-		/*double nothingDistance = getDistanceFromColorRange(redAvg, greenAvg, blueAvg, Globals.nothingColorRanges);
-		double orangeDistance = getDistanceFromColorRange(redAvg, greenAvg, blueAvg, Globals.orangeColorRanges);
-		double lightblueDistance = getDistanceFromColorRange(redAvg, greenAvg, blueAvg, Globals.lightblueColorRanges);
-		double purpleDistance = getDistanceFromColorRange(redAvg, greenAvg, blueAvg, Globals.purpleColorRanges);
+		double minDistance = Math.min(Math.min(Math.min(orangeDistance, yellowDistance), lightblueDistance), purpleDistance);
 		
-		double minDistance = Math.min(Math.min(Math.min(nothingDistance, orangeDistance), lightblueDistance), purpleDistance);
-		
-		if (nothingDistance == minDistance) return BallColor.NOTHING;
-		else if (orangeDistance == minDistance) return BallColor.ORANGE;
+		if (orangeDistance == minDistance) return BallColor.ORANGE;
+		else if (yellowDistance == minDistance) return BallColor.YELLOW;
 		else if (lightblueDistance == minDistance) return BallColor.LIGHTBLUE;
-		else return BallColor.PURPLE;*/	
+		else return BallColor.PURPLE;	
+	}
+	
+	//Medir bien estas cosas
+	
+	public static boolean isNothing(int red, int green, int blue) {
+		return (red < 15) && (green < 15) && (blue < 15);
+	}
+	
+	public static boolean isOrange(int red, int green, int blue) {
+		return (green > 150) && (Math.abs(red - green) < 15) && (blue < 100);
+	}
+	
+	public static boolean isYellow(int red, int green, int blue) {
+		return (red > 190) && (green > 190) && (blue > 190);
+	}
+	
+	public static boolean isLightBlue(int red, int green, int blue) {
+		return (green > red) && (green > blue) && (green < 210) && (red > 150) && (blue > 130);
+	}
+	
+	public static boolean isPurple(int red, int green, int blue) {
+		return (green < 100) && (Math.abs(red - blue) < 15) && (red > 110);
+	}
+	
+	public static double getDistanceFromColor(int red, int green, int blue, float[] relations) {
+		double distance = 0.0;
+		
+		if (red == 0) red++;
+		if (green == 0) green++;
+		if (blue == 0) blue++;
+		
+		
+		//Distancias ponderadas segun las relaciones entre colores
+		distance += Math.abs( red  / green - relations[0]);
+		distance += Math.abs(green / blue  - relations[1]);
+		distance += Math.abs(blue  /  red  - relations[2]);
+				
+		return distance;
 	}
 }

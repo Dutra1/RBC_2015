@@ -2,7 +2,7 @@ import lejos.nxt.MotorPort;
 import lejos.nxt.TachoMotorPort;
 import lejos.nxt.addon.LnrActrFirgelliNXT;
 
-public class Testing {
+public class LowerMast {
 	public static final TachoMotorPort mastMotor = MotorPort.B;
 
 	public static void main(String argv[]) {

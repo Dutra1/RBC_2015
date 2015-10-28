@@ -12,14 +12,6 @@ public class Turn implements Behavior{
 	private DifferentialPilot pilot;
 	private TouchSensor touch;
 	private static boolean nextTurn; //0 left - 1 right
-	
-	public static boolean getNextTurn() {
-		return nextTurn;
-	}
-
-	public static void setNextTurn(boolean next) {
-		nextTurn = next;
-	}
 
 	public Turn (DifferentialPilot pilot, SensorPort touchPort) {
 		this.pilot = pilot;
@@ -52,4 +44,20 @@ public class Turn implements Behavior{
 
 	@Override
 	public void suppress() {}
+	
+	public static boolean getNextTurn() {
+		return nextTurn;
+	}
+
+	public static void setNextTurn(boolean next) {
+		nextTurn = next;
+	}
+	
+	public static void setNextTurnLeft() {
+		nextTurn = false;
+	}
+	
+	public static void setNextTurnRight() {
+		nextTurn = true;
+	}
 }

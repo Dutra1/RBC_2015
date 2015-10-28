@@ -23,19 +23,18 @@ public class Robot {
 
 		pilot = new DifferentialPilot(Globals.wheelDiameter, Globals.trackWidth, Globals.leftMotor, Globals.rightMotor, true);
 		pilot.setTravelSpeed(Globals.travelSpeed);
-		Globals.scoopMotor.setSpeed(Globals.scoopSpeed);
 		
 		LCD.drawString(Globals.introMsg, 0, 0);
 		LCD.drawString(Globals.pressButton, 0, 1);
 		
-		/*Music music = new Music();
-		music.playMarch();*/
-		
 		Button.waitForAnyPress();
 		LCD.clear();
 		
-		comm = new Communication();
-	    comm.start();
+		/*Music music = new Music();
+		music.playMarch();*/
+		
+		/*comm = new Communication();
+	    comm.start();*/
 	    
 	    /*commdebugger = new CommDebugger();
 	    commdebugger.start();*/
@@ -46,7 +45,6 @@ public class Robot {
 		Behavior t = new Turn(pilot, Globals.touchPort);
 		Behavior ll = new LiftLoader(pilot, Globals.scoopMotor, Globals.touchPort);
 		Behavior bo = new Backoff(pilot, Globals.touchPort);
-		
 
 		Behavior [] hierarchy = {f, t, ll, bo};
 		Arbitrator arbitrator = new Arbitrator(hierarchy);
