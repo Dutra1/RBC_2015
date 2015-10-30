@@ -32,7 +32,8 @@ public class Globals{
 	//Speeds
 	public static final int travelSpeed = 25;
 	public static final int rotateSpeed = 30;
-	public static final int scoopSpeed = 175;
+	public static final int liftScoopSpeed = 2000;
+	public static final int dropScoopSpeed = 200;
 	
 	//Navigation
 	public static final int distanceTolerance = 25; //mm
@@ -47,7 +48,7 @@ public class Globals{
 	public static final int backwardsDistance = 15;
 	
 	//Flocking
-	public static final int minObjectDistance = 20; //cm
+	public static final int minObjectDistance = 22; //cm
 	public static final int maxObjectDistance = 150; //cm
 	
 	//Delays

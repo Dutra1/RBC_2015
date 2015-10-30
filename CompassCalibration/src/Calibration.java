@@ -33,8 +33,9 @@ public class Calibration {
 		LCD.drawString("Don't touch while it's calibrating", 0, 0);
 		
 		//Raise mast
-		mast.setPower(100);
-		mast.moveTo(200, false);
+		
+		/*mast.setPower(100);
+		mast.move(200, false);*/
 		
 		//Rotate Slowly
 		leftMotor.setSpeed(motorSpeed);
@@ -56,7 +57,7 @@ public class Calibration {
 		LCD.drawString("Click left or right to lower mast", 0, 0);
 		int button = Button.waitForAnyPress();
 		if ((button == Button.ID_LEFT) || (button == Button.ID_RIGHT)) {
-			mast.moveTo(0, false);
+			mast.move(-200, false);
 		}
 	}
 }

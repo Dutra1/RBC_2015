@@ -12,10 +12,6 @@ public class Slave {
        
         LCD.drawString("Kicker!", 0, 0);
         
-        /*LnrActrFirgelliNXT mast = new LnrActrFirgelliNXT(Globals.mastMotor);
-        mast.setPower(100);
-        mast.moveTo(0, false);*/
-        
         Button.waitForAnyPress();
         LCD.clear();
         
@@ -23,10 +19,10 @@ public class Slave {
         comm = new Communication();
         comm.start();*/
         
-        //Behavior raiseMast = new RaiseMast();
+        Behavior raiseMast = new RaiseMast(Globals.mastMotor);
         Behavior senseAndKick = new SenseAndKick(Globals.kicker, Globals.colorPort, Globals.compassPort);
         
-        Behavior[] hierarchy = {senseAndKick/*, raiseMast*/};
+        Behavior[] hierarchy = {senseAndKick, raiseMast};
         Arbitrator arbitrator = new Arbitrator(hierarchy);
         arbitrator.start();
 	}

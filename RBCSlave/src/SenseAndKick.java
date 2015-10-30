@@ -9,7 +9,7 @@ import lejos.util.Delay;
 
 public class SenseAndKick implements Behavior{
 
-	private NXTRegulatedMotor kicker = Globals.kicker;
+	private NXTRegulatedMotor kicker;
 	private ColorSensor cs;
 	private CompassHTSensor compass;
 	
@@ -37,11 +37,11 @@ public class SenseAndKick implements Behavior{
     			kicker.setSpeed(Globals.letGoSpeed);
     			kicker.rotate(360 / Globals.kickerGearReduction);
     		} else if ((ballColor == BallColor.ORANGE) || (ballColor == BallColor.YELLOW)) {
-    			if (isOriented(compass.getDegreesCartesian())) {
-    				kicker.setSpeed(Globals.kickSpeed);
-    				kicker.rotate(-90 / Globals.kickerGearReduction);
-    				kicker.rotate(450 / Globals.kickerGearReduction);
-    			}
+    			while(!isOriented(compass.getDegreesCartesian())) {}
+    			
+				kicker.setSpeed(Globals.kickSpeed);
+				kicker.rotate(-90 / Globals.kickerGearReduction);
+				kicker.rotate(450 / Globals.kickerGearReduction);
     		}
     		
     		Delay.msDelay(Globals.msAfterKick);
@@ -52,9 +52,9 @@ public class SenseAndKick implements Behavior{
 	public void suppress() {}
 
 	public static boolean isOriented(float compassValue) {
-		return true;
-		//return (compassValue > Globals.idealAngle - Globals.allowedAngleError) && 
-		//	   (compassValue < Globals.idealAngle + Globals.allowedAngleError);
+		//return true;
+		return (compassValue > Globals.idealAngle - Globals.allowedAngleError) && 
+			   (compassValue < Globals.idealAngle + Globals.allowedAngleError);
 	}
 	
 	public static BallColor getBallColor(ColorSensor cs){	

@@ -41,12 +41,12 @@ public class ColorTesting {
 			}
 			
 			LCD.drawString("A: " + redAvg / colorSensorSamples + ", "
-									   + greenAvg / colorSensorSamples + ", "
-									   + blueAvg / colorSensorSamples, 0, colorSensorSamples);
+								 + greenAvg / colorSensorSamples + ", "
+								 + blueAvg / colorSensorSamples, 0, colorSensorSamples);
 			
 			LCD.drawString("R: " + redAvg / (1.0f * greenAvg) + ", "
-					   + greenAvg / (1.0f * blueAvg) + ", "
-					   + blueAvg / (1.0f * redAvg), 0, colorSensorSamples + 1);
+								 + greenAvg / (1.0f * blueAvg) + ", "
+								 + blueAvg / (1.0f * redAvg), 0, colorSensorSamples + 1);
 			
 		}
 	}

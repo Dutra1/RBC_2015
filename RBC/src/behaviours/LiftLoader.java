@@ -17,8 +17,6 @@ public class LiftLoader implements Behavior{
 		this.pilot = pilot;
 		this.scoop = scoop;
 		this.touch = new TouchSensor(touchPort);
-		
-		this.scoop.setSpeed(Globals.scoopSpeed);
 	}
 	
 	@Override
@@ -28,8 +26,12 @@ public class LiftLoader implements Behavior{
 
 	@Override
 	public void action() {
+		scoop.setSpeed(Globals.liftScoopSpeed);
 		scoop.rotateTo(-Globals.scoopRotationAngle, false);
+		
+		scoop.setSpeed(Globals.dropScoopSpeed);
 		scoop.rotateTo(0, false);
+		
 		scoop.flt();
 	}
 

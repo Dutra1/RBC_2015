@@ -12,12 +12,14 @@ public class Turn implements Behavior{
 	private DifferentialPilot pilot;
 	private TouchSensor touch;
 	private static boolean nextTurn; //0 left - 1 right
+	private static boolean turnInPlace;
 
 	public Turn (DifferentialPilot pilot, SensorPort touchPort) {
 		this.pilot = pilot;
 		this.touch = new TouchSensor(touchPort);
 		
 		nextTurn = false;
+		turnInPlace = false;
 	}
 	
 	@Override
@@ -28,14 +30,26 @@ public class Turn implements Behavior{
 	@Override
 	public void action() {
 		pilot.setTravelSpeed(Globals.rotateSpeed);
-		if (nextTurn) {
-			//right
-			pilot.steer(-100, -180);
-		} else {
-			//left
-			pilot.steer(100, 180);
+		if (turnInPlace) {
+			if (nextTurn) {
+				//Right in place
+				pilot.steer(-200, -180);
+			} else {
+				//Left in place
+				pilot.steer(200, 180);
+			}
+		} else { 
+			if (nextTurn) {
+				//Right
+				pilot.steer(-100, -180);
+			} else {
+				//Left
+				pilot.steer(100, 180);
+			}
 		}
+			
 		nextTurn = !nextTurn;
+		turnInPlace = false;
 		
 		pilot.setTravelSpeed(Globals.travelSpeed);
 		pilot.forward();
@@ -45,19 +59,15 @@ public class Turn implements Behavior{
 	@Override
 	public void suppress() {}
 	
-	public static boolean getNextTurn() {
-		return nextTurn;
-	}
-
-	public static void setNextTurn(boolean next) {
-		nextTurn = next;
-	}
-	
 	public static void setNextTurnLeft() {
 		nextTurn = false;
 	}
 	
 	public static void setNextTurnRight() {
 		nextTurn = true;
+	}
+	
+	public static void setTurnInPlace() {
+		turnInPlace = true;
 	}
 }

@@ -43,7 +43,12 @@ public class Forward implements Behavior{
 			Thread.yield();
 		}
 		
-		if(minLeftDistance < Globals.minObjectDistance){
+		pilot.stop();
+		
+		//Tell where to turn to flock
+		if ((minLeftDistance < Globals.minObjectDistance) && (minRightDistance < Globals.minObjectDistance)) {
+			Turn.setTurnInPlace();
+		} else if(minLeftDistance < Globals.minObjectDistance){
 			Turn.setNextTurnRight();
 		} else if(minRightDistance < Globals.minObjectDistance){
 			Turn.setNextTurnLeft();
@@ -52,8 +57,6 @@ public class Forward implements Behavior{
 		} else if (minRightDistance > Globals.maxObjectDistance) {
 			Turn.setNextTurnRight();
 		}
-		
-		pilot.stop();
 	}
 
 	@Override
