@@ -41,7 +41,9 @@ public class SenseAndKick implements Behavior{
     			
 				kicker.setSpeed(Globals.kickSpeed);
 				kicker.rotate(-90 / Globals.kickerGearReduction);
-				kicker.rotate(450 / Globals.kickerGearReduction);
+				kicker.rotate(360 / Globals.kickerGearReduction);
+				kicker.setSpeed(Globals.letGoSpeed);
+    			kicker.rotate(90 / Globals.kickerGearReduction);
     		}
     		
     		Delay.msDelay(Globals.msAfterKick);

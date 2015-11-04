@@ -48,8 +48,12 @@ public class Globals{
 	public static final int backwardsDistance = 15;
 	
 	//Flocking
-	public static final int minObjectDistance = 22; //cm
-	public static final int maxObjectDistance = 150; //cm
+	public static final int minWallDistance = 22; //cm
+	public static final int minRobotDistance = 35; //cm
+	public static final int maxRobotDistance = 150; //cm
+	public static final int dangerZone = 10; //cm
+	
+	public static final int robotFingerprint = 25; //cm
 	
 	//Delays
 	public static final int isMovingDelay = 100;

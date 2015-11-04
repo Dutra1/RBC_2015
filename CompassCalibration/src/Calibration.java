@@ -15,7 +15,7 @@ public class Calibration {
 	public static final NXTRegulatedMotor rightMotor =  Motor.B;
 	public static final TachoMotorPort mastMotor = MotorPort.C;
 	
-	public static final SensorPort compassPort =  SensorPort.S3;
+	public static final SensorPort compassPort =  SensorPort.S4;
 	
 	public static final int motorSpeed = 75;
 	public static final int delay = 75 * 1000;

@@ -12,7 +12,7 @@ public class CompassTesting {
 	
 	public static final TachoMotorPort mastMotor = MotorPort.C;
 	
-	public static final SensorPort compassPort =  SensorPort.S2;
+	public static final SensorPort compassPort =  SensorPort.S4;
 	
 	public static final int motorSpeed = 100;
 	public static final int delay = 100;
