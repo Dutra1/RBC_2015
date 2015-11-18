@@ -44,7 +44,7 @@ public class Robot {
 		Behavior f = new Forward(pilot, Globals.usL, Globals.usR);
 		Behavior t = new Turn(pilot, Globals.touchPort);
 		Behavior ll = new LiftLoader(pilot, Globals.scoopMotor, Globals.touchPort);
-		Behavior bo = new Backoff(pilot, Globals.touchPort);
+		Behavior bo = new Backoff(pilot, Globals.touchPort, Globals.irPort);
 
 		Behavior [] hierarchy = {f, t, ll, bo};
 		Arbitrator arbitrator = new Arbitrator(hierarchy);

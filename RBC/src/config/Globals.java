@@ -14,15 +14,15 @@ public class Globals{
 	
 	//Mechanics
 	public static final float wheelDiameter = 3.0f;
-	public static final float trackWidth = 18.5f;
+	public static final float trackWidth = 18.0f;
 	public static final int scoopRotationAngle = 180;
 	
 	//Sensor Ports
 	public static final SensorPort touchPort =  SensorPort.S1;
-	public static final SensorPort irPort =  SensorPort.S2;
-	public static final SensorPort compassPort =  SensorPort.S3;
 	public static final SensorPort usR = SensorPort.S2;
 	public static final SensorPort usL = SensorPort.S3;
+	public static final SensorPort irPort =  SensorPort.S4;
+	public static final SensorPort compassPort =  SensorPort.S3;
 	
 	//Motor Ports
 	public static final NXTRegulatedMotor leftMotor =  Motor.A;
@@ -48,14 +48,15 @@ public class Globals{
 	public static final int backwardsDistance = 15;
 	
 	//Flocking
-	public static final int minWallDistance = 22; //cm
+	public static final int minWallDistance = 20; //cm
 	public static final int minRobotDistance = 35; //cm
 	public static final int maxRobotDistance = 150; //cm
-	public static final int dangerZone = 10; //cm
+	public static final int dangerZone = 7; //cm
 	
-	public static final int robotFingerprint = 25; //cm
+	public static final int windowSize = 5;
 	
 	//Delays
 	public static final int isMovingDelay = 100;
 	public static final int backDelay = 500;
+	public static final int msBetweenReadings = 100;
 }

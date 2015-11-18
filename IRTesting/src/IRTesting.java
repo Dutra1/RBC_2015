@@ -1,12 +1,13 @@
 import lejos.nxt.Button;
 import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
 import lejos.nxt.addon.OpticalDistanceSensor;
 import lejos.util.Delay;
 
 public class IRTesting {
 	
-	public static final SensorPort irPort =  SensorPort.S2;
+	public static final SensorPort irPort =  SensorPort.S4;
 	public static final int delay = 100;
 	
 	public static void main(String argv[]) {
@@ -26,6 +27,7 @@ public class IRTesting {
 		while(!stop) {
 			LCD.clear(3);
 			LCD.drawString("IR: " + ir.getDistance(), 0, 3);
+			Sound.playTone(ir.getDistance() + 100, delay);
 			Delay.msDelay(delay);
 			
 			if (Button.readButtons() != 0) stop = true;
