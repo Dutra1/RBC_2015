@@ -1,6 +1,7 @@
 package uy.robotica;
 
 import behaviours.Backoff;
+import behaviours.Flocking;
 import behaviours.Forward;
 import behaviours.LiftLoader;
 import behaviours.Turn;
@@ -42,11 +43,12 @@ public class Robot {
 	    pilot.forward();
 	    
 		Behavior f = new Forward(pilot, Globals.usL, Globals.usR);
-		Behavior t = new Turn(pilot, Globals.touchPort);
-		Behavior ll = new LiftLoader(pilot, Globals.scoopMotor, Globals.touchPort);
-		Behavior bo = new Backoff(pilot, Globals.touchPort, Globals.irPort);
+		Behavior t = new Turn(pilot, Globals.irPort);
+		Behavior ll = new LiftLoader(pilot, Globals.scoopMotor);
+		Behavior bo = new Backoff(pilot, Globals.irPort);
+		Behavior flocking = new Flocking(pilot, Globals.camPort, Globals.irPort);
 
-		Behavior [] hierarchy = {f, t, ll, bo};
+		Behavior [] hierarchy = {f, t, ll, bo, flocking};
 		Arbitrator arbitrator = new Arbitrator(hierarchy);
 		arbitrator.start();
 	}

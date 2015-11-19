@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import config.Globals;
-import lejos.nxt.LCD;
 import lejos.nxt.SensorPort;
-import lejos.nxt.Sound;
-import lejos.nxt.TouchSensor;
+import lejos.nxt.addon.OpticalDistanceSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
 import lejos.util.Delay;
@@ -15,46 +13,55 @@ import lejos.util.Delay;
 public class Turn implements Behavior{
 
 	private DifferentialPilot pilot;
-	private TouchSensor touch;
+	private OpticalDistanceSensor ir;
 	private static boolean nextTurn; //0 left - 1 right
 	private static boolean turnInPlace;
+	private boolean suppressed;
 
-	public Turn (DifferentialPilot pilot, SensorPort touchPort) {
+	public Turn (DifferentialPilot pilot, SensorPort irPort) {
 		this.pilot = pilot;
-		this.touch = new TouchSensor(touchPort);
+		this.ir = new OpticalDistanceSensor(irPort);
 		
 		nextTurn = false;
 		turnInPlace = false;
+		suppressed = false;
 	}
 	
 	@Override
 	public boolean takeControl() {
-		return !pilot.isMoving() && !touch.isPressed();
+		
+		return !pilot.isMoving() && ir.getDistance() > Globals.IRMaxWallDistance;
 	}
 
 	@Override
 	public void action() {
+		suppressed = false;
 		pilot.setTravelSpeed(Globals.rotateSpeed);
 		if (turnInPlace) {
 			if (nextTurn) {
 				//Right in place
-				pilot.steer(-200, -180);
+				pilot.steer(-200, -180, true);
 			} else {
 				//Left in place
-				pilot.steer(200, 180);
+				pilot.steer(200, 180, true);
 			}
 		} else { 
 			if (nextTurn) {
 				//Right
-				pilot.steer(-100, -180);
+				pilot.steer(-100, -180, true);
 			} else {
 				//Left
-				pilot.steer(100, 180);
+				pilot.steer(100, 180, true);
 			}
 		}
+		Delay.msDelay(Globals.isMovingDelay);
 			
 		nextTurn = !nextTurn;
 		turnInPlace = false;
+		
+		while(!suppressed && pilot.isMoving()) {
+			Thread.yield();
+		}
 		
 		pilot.setTravelSpeed(Globals.travelSpeed);
 		pilot.forward();
@@ -62,7 +69,9 @@ public class Turn implements Behavior{
 	}
 
 	@Override
-	public void suppress() {}
+	public void suppress() {
+		suppressed = true;
+	}
 	
 	public static void calculateNextTurn(List<Integer> leftMeasures, List<Integer> rightMeasures) {
 		List<Double> filteredLeft = applySquareFilter(leftMeasures, Globals.windowSize);
@@ -71,24 +80,24 @@ public class Turn implements Behavior{
 		double leftVariance = getVariance(filteredLeft);
 		double rightVariance = getVariance(filteredRight);
 		
-		boolean isRobotRight = rightVariance > leftVariance;
-		boolean isRobotLeft = !isRobotRight;
+		boolean isRobotRight = rightVariance > leftVariance * Globals.varianceFactor;
+		boolean isRobotLeft = leftVariance > rightVariance * Globals.varianceFactor;
 		
 		double minLeftDistance = getMinimun(filteredLeft);
 		
 		double minRightDistance = getMinimun(filteredRight);
 		
-		boolean tooCloseLeft = tooClose(!isRobotLeft, minLeftDistance);
+		boolean tooCloseLeft = tooClose(isRobotLeft, minLeftDistance);
 		boolean tooCloseRight = tooClose(isRobotRight, minRightDistance);
 		boolean tooFarLeft = tooFar(isRobotLeft, minLeftDistance);
 		boolean tooFarRight = tooFar(isRobotRight, minRightDistance);
 		
-		if (isRobotLeft) Sound.beep();
+		/*if (isRobotLeft) Sound.beep();
 		else if (isRobotRight) Sound.twoBeeps();
 		LCD.clear();
 		LCD.drawString("Cant" + filteredLeft.size(), 0, 5);
 		LCD.drawString("Left var" + leftVariance, 0, 6);
-		LCD.drawString("Right var" + rightVariance, 0, 7);
+		LCD.drawString("Right var" + rightVariance, 0, 7);*/
 		
 		//Flocking
 		if (tooCloseLeft && tooCloseRight) {
@@ -154,11 +163,11 @@ public class Turn implements Behavior{
 	}
 	
 	private static boolean tooClose(boolean isRobot, Double minDist) {
-		return (isRobot && (minDist < Globals.minRobotDistance)) || (!isRobot && (minDist < Globals.minWallDistance)); 
+		return (isRobot && (minDist < Globals.sideMinRobotDistance)) || (!isRobot && (minDist < Globals.sideMinWallDistance)); 
 	}
 	
 	private static boolean tooFar(boolean isRobot, Double minDist) {
-		return isRobot && (minDist > Globals.maxRobotDistance);
+		return isRobot && (minDist > Globals.sideMaxRobotDistance);
 	}
 	
 	private static void setNextTurnLeft() {

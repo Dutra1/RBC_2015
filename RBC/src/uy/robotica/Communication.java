@@ -14,7 +14,7 @@ public class Communication extends Thread {
 	private CompassHTSensor compass;
 	
 	public Communication(){
-		compass = new CompassHTSensor(Globals.compassPort);
+		//compass = new CompassHTSensor(Globals.compassPort);
 	}
 	
 	
