@@ -1,42 +1,43 @@
 package behaviours;
 
-import java.awt.Rectangle;
+
 import config.Globals;
 import lejos.nxt.SensorPort;
 import lejos.nxt.Sound;
-import lejos.nxt.addon.NXTCam;
-import lejos.nxt.addon.OpticalDistanceSensor;
+import lejos.nxt.UltrasonicSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
+import lejos.util.Delay;
 
 public class Flocking implements Behavior {
 
 	private DifferentialPilot pilot;
-	private NXTCam cam;
-	private OpticalDistanceSensor ir;
+	private UltrasonicSensor us;
+	private int[] distances;
 	
-	public Flocking(DifferentialPilot pilot, SensorPort camPort, SensorPort irPort) {
+	public Flocking(DifferentialPilot pilot, SensorPort usPort) {
 		this.pilot = pilot;
-		this.cam = new NXTCam(camPort);
-		this.ir = new OpticalDistanceSensor(irPort);
-		
-		cam.setTrackingMode(NXTCam.OBJECT_TRACKING);
-		cam.enableTracking(true);
-		cam.sortBy(NXTCam.SIZE);
+		this.us = new UltrasonicSensor(usPort);
+
+		distances = new int[8];
 	}
 	
 	@Override
 	public boolean takeControl() {
-		return canSeeFriendlyRobot(cam);
+		return canSeeFriendlyRobot(us);
 	}
 
 	@Override
 	public void action() {
 		Sound.beepSequenceUp();
-		int distance = ir.getDistance();
-		if (distance > Globals.forwardMaxFlockingDistance) {
+		
+		us.continuous();
+		Delay.msDelay(20); //Recomendacion de lejos
+		int robotDistance = us.getDistance();
+		
+		if (robotDistance > Globals.forwardMaxFlockingDistance) {
 			pilot.forward();
-		} else if ((distance < Globals.forwardMinFlockingDistance) && (distance > Globals.IRMinSafeDistance)) {
+		} else if (robotDistance < Globals.forwardMinFlockingDistance) {
 			pilot.backward();
 		}
 	}
@@ -44,16 +45,42 @@ public class Flocking implements Behavior {
 	@Override
 	public void suppress() {}
 	
-	private boolean canSeeFriendlyRobot(NXTCam cam) {
-		//cam.readAll();
-		int numberOfObjects = cam.getNumberOfObjects();
-		if (numberOfObjects == 0) {
-			return false;
-		}
-		Sound.playTone(numberOfObjects * 100, 100);
+	private boolean canSeeFriendlyRobot(UltrasonicSensor us) {
+		us.ping();
+		int cant = us.getDistances(distances);
+		orderList(distances, cant);
 		
-		Rectangle rectangle = cam.getRectangle(0);
-		return (rectangle.x < Globals.midWallPixelWidth) && (rectangle.getHeight() * rectangle.getWidth() > Globals.minAreaRectangle);
+		if (cant < 2) {
+			//Vio solo una cosa
+			return false;
+		} else if (cant == 8) {
+			//Vio muchas cosas que seguro son el robot
+			return true;
+		} else {
+			int previousDistance = distances[0];
+			for (int i = 1; i < cant; i++) {
+				int currentDistance = distances[i];
+				if (currentDistance == 255) {
+					return false;
+				} else if (currentDistance - previousDistance > Globals.friendlyRobotWidth) {
+					return true;
+				} else {
+					previousDistance = currentDistance;
+				}
+			}
+			return false;
+		}		
 	}
-
+	
+	private void orderList(int[] list, int cantidad) {
+		for(int i = 0; i < cantidad - 1; i++) {
+			for (int j = i; j < cantidad - 1; j++) {
+				if (list[j] > list[j + 1]) {
+					int aux = list[j];
+					list[j] = list[j + 1];
+					list[j + 1] = aux;
+				}
+			}
+		}
+	}
 }

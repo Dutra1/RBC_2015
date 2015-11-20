@@ -2,7 +2,7 @@ package behaviours;
 
 import config.Globals;
 import lejos.nxt.SensorPort;
-import lejos.nxt.addon.OpticalDistanceSensor;
+import lejos.nxt.TouchSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
 import lejos.util.Delay;
@@ -10,21 +10,22 @@ import lejos.util.Delay;
 public class Backoff implements Behavior{
 	
 	private DifferentialPilot pilot;
-	OpticalDistanceSensor ir;
+	private SensorPort touchPort;
 	
-	public Backoff (DifferentialPilot pilot, SensorPort irPort) {
+	public Backoff (DifferentialPilot pilot, SensorPort touchPort) {
 		this.pilot = pilot;
-		this.ir = new OpticalDistanceSensor(irPort);
+		this.touchPort = touchPort;
 	}
 
 	@Override
 	public boolean takeControl() {
-		int distance = ir.getDistance();
-		return (distance < Globals.IRMaxWallDistance) && (distance > Globals.IRMinSafeDistance);
+		TouchSensor touch = new TouchSensor(touchPort); 
+		return touch.isPressed();
 	}
 
 	@Override
 	public void action() {
+		pilot.stop();
 		pilot.travel(-Globals.backwardsDistance, true);
 		Delay.msDelay(Globals.backDelay);
 	}

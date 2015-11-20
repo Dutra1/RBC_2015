@@ -5,7 +5,7 @@ import java.util.List;
 
 import config.Globals;
 import lejos.nxt.SensorPort;
-import lejos.nxt.addon.OpticalDistanceSensor;
+import lejos.nxt.TouchSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
 import lejos.util.Delay;
@@ -13,14 +13,14 @@ import lejos.util.Delay;
 public class Turn implements Behavior{
 
 	private DifferentialPilot pilot;
-	private OpticalDistanceSensor ir;
+	private TouchSensor touch;
 	private static boolean nextTurn; //0 left - 1 right
 	private static boolean turnInPlace;
 	private boolean suppressed;
 
-	public Turn (DifferentialPilot pilot, SensorPort irPort) {
+	public Turn (DifferentialPilot pilot, SensorPort touchPort) {
 		this.pilot = pilot;
-		this.ir = new OpticalDistanceSensor(irPort);
+		this.touch = new TouchSensor(touchPort);
 		
 		nextTurn = false;
 		turnInPlace = false;
@@ -30,7 +30,7 @@ public class Turn implements Behavior{
 	@Override
 	public boolean takeControl() {
 		
-		return !pilot.isMoving() && ir.getDistance() > Globals.IRMaxWallDistance;
+		return !pilot.isMoving() && !touch.isPressed();
 	}
 
 	@Override
