@@ -17,7 +17,7 @@ public class Turn implements Behavior{
 	private static boolean nextTurn; //0 left - 1 right
 	private static boolean turnInPlace;
 	private boolean suppressed;
-	private boolean isRobot;
+	private static boolean isRobot;
 
 	public Turn (DifferentialPilot pilot, SensorPort irPort) {
 		this.pilot = pilot;
@@ -36,22 +36,29 @@ public class Turn implements Behavior{
 	@Override
 	public void action() {
 		suppressed = false;
+		int steerAngle = 0;
+		if(isRobot){
+			
+			steerAngle=90;
+		}else{
+			steerAngle=180;
+		}
 		pilot.setTravelSpeed(Globals.rotateSpeed);
 		if (turnInPlace) {
 			if (nextTurn) {
 				//Right in place
-				pilot.steer(-200, -180, true);
+				pilot.steer(-200, -steerAngle, !isRobot);
 			} else {
 				//Left in place
-				pilot.steer(200, 180, true);
+				pilot.steer(200, steerAngle, !isRobot);
 			}
 		} else { 
 			if (nextTurn) {
 				//Right
-				pilot.steer(-100, -180, true);
+				pilot.steer(-100, -steerAngle, !isRobot);
 			} else {
 				//Left
-				pilot.steer(100, 180, true);
+				pilot.steer(100, steerAngle, !isRobot);
 			}
 		}
 		Delay.msDelay(Globals.isMovingDelay);
@@ -66,10 +73,12 @@ public class Turn implements Behavior{
 		pilot.setTravelSpeed(Globals.travelSpeed);
 		pilot.forward();
 		Delay.msDelay(Globals.isMovingDelay);
+		isRobot=false;
 	}
 
 	@Override
 	public void suppress() {
+		isRobot=false;
 		suppressed = true;
 	}
 	
@@ -102,15 +111,15 @@ public class Turn implements Behavior{
 		LCD.drawString("Right var" + rightVariance, 0, 7);*/
 		
 		//Flocking
-		if (tooCloseLeft && tooCloseRight) {
+		if ((tooCloseLeft && tooCloseRight) || isRobot) {
 			setTurnInPlace();
-		} else if (tooCloseLeft) {
+		} else if (tooCloseLeft || isRobotRight) {
 			setNextTurnRight();
-		} else if (tooCloseRight) {
+		} else if (tooCloseRight || isRobotLeft) {
 			setNextTurnLeft();
-		} else if (tooFarLeft) {
+		} else if (tooFarLeft || isRobotLeft) {
 			setNextTurnLeft();
-		} else if (tooFarRight) {
+		} else if (tooFarRight || isRobotRight) {
 			setNextTurnRight();
 		}
 		
