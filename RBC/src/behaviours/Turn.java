@@ -17,6 +17,7 @@ public class Turn implements Behavior{
 	private static boolean nextTurn; //0 left - 1 right
 	private static boolean turnInPlace;
 	private boolean suppressed;
+	private boolean isRobot;
 
 	public Turn (DifferentialPilot pilot, SensorPort irPort) {
 		this.pilot = pilot;
@@ -29,8 +30,7 @@ public class Turn implements Behavior{
 	
 	@Override
 	public boolean takeControl() {
-		
-		return !pilot.isMoving() && ir.getDistance() > Globals.IRMaxWallDistance;
+		return (!pilot.isMoving() && ir.getDistance() > Globals.IRMaxWallDistance) || isRobot;
 	}
 
 	@Override
@@ -82,6 +82,8 @@ public class Turn implements Behavior{
 		
 		boolean isRobotRight = rightVariance > leftVariance * Globals.varianceFactor;
 		boolean isRobotLeft = leftVariance > rightVariance * Globals.varianceFactor;
+		
+		isRobot = isRobotRight || isRobotLeft;
 		
 		double minLeftDistance = getMinimun(filteredLeft);
 		

@@ -48,8 +48,11 @@ public class Globals{
 	public static final int sideMinRobotDistance = 35; //cm
 	public static final int sideMaxRobotDistance = 70; //cm
 	public static final int dangerZone = 7; //cm
+	public static final int thresholdRobot = 20;
 	
+	public static final int robotCheckPeriod = 10;
 	public static final int windowSize = 5;
+	public static final int samplesForFilter = 10;
 	
 	public static final int forwardMinFlockingDistance = 250;
 	public static final int forwardMaxFlockingDistance = 500;
