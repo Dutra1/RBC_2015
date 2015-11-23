@@ -18,6 +18,11 @@ public class Turn implements Behavior{
 	private static boolean turnInPlace;
 	private boolean suppressed;
 	private static boolean isRobot;
+	
+	private final int inPlace = 200;
+	private final int aroundWheel = 100;
+	private final int quarterCircle = 90;
+	private final int halfCircle = 180;
 
 	public Turn (DifferentialPilot pilot, SensorPort touchPort) {
 		this.pilot = pilot;
@@ -39,33 +44,34 @@ public class Turn implements Behavior{
 		pilot.setTravelSpeed(Globals.rotateSpeed);
 		if(isRobot){
 			if (nextTurn) {
-				//Right in place
-				pilot.steer(-200, -90, false);
+				//Right 90 degrees
+				pilot.steer(-inPlace, -quarterCircle, true);
 			} else {
-				//Left in place
-				pilot.steer(200, 90, false);
+				//Left 90 degrees
+				pilot.steer(inPlace, quarterCircle, true);
 			}
 		} else if (turnInPlace) {
 			if (nextTurn) {
 				//Right in place
-				pilot.steer(-200, -180, true);
+				pilot.steer(-inPlace, -halfCircle, true);
 			} else {
 				//Left in place
-				pilot.steer(200, 180, true);
+				pilot.steer(inPlace, halfCircle, true);
 			}
 		} else { 
 			if (nextTurn) {
 				//Right
-				pilot.steer(-100, -180, true);
+				pilot.steer(-aroundWheel, -halfCircle, true);
 			} else {
 				//Left
-				pilot.steer(100, 180, true);
+				pilot.steer(aroundWheel, halfCircle, true);
 			}
 		}
 		Delay.msDelay(Globals.isMovingDelay);
 			
 		nextTurn = !nextTurn;
 		turnInPlace = false;
+		isRobot = false;
 		
 		while(!suppressed && pilot.isMoving()) {
 			Thread.yield();
@@ -74,7 +80,6 @@ public class Turn implements Behavior{
 		pilot.setTravelSpeed(Globals.travelSpeed);
 		pilot.forward();
 		Delay.msDelay(Globals.isMovingDelay);
-		isRobot=false;
 	}
 
 	@Override
@@ -103,13 +108,6 @@ public class Turn implements Behavior{
 		boolean tooCloseRight = tooClose(isRobotRight, minRightDistance);
 		boolean tooFarLeft = tooFar(isRobotLeft, minLeftDistance);
 		boolean tooFarRight = tooFar(isRobotRight, minRightDistance);
-		
-		/*if (isRobotLeft) Sound.beep();
-		else if (isRobotRight) Sound.twoBeeps();
-		LCD.clear();
-		LCD.drawString("Cant" + filteredLeft.size(), 0, 5);
-		LCD.drawString("Left var" + leftVariance, 0, 6);
-		LCD.drawString("Right var" + rightVariance, 0, 7);*/
 		
 		//Flocking
 		if ((tooCloseLeft && tooCloseRight)) {

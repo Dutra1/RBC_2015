@@ -36,6 +36,7 @@ public class Flocking implements Behavior {
 			Delay.msDelay(20); //Recomendacion de lejos
 			int robotDistance = us.getDistance();	
 			
+			pilot.setTravelSpeed(Globals.travelSpeed);
 			if (robotDistance > Globals.forwardMaxFlockingDistance) {
 				pilot.forward();
 			} else if (robotDistance < Globals.forwardMinFlockingDistance) {
@@ -61,9 +62,10 @@ public class Flocking implements Behavior {
 		orderList(distances, cant);
 		
 		if (cant < 2) {
-			//Vio solo una cosa
+			//Solo una medida
 			return false;
 		} else {
+			//Filtrar medidas muy chicas
 			int firstDistanceIndex = cant - 1;
 			for (int i = 0; i < cant; i++) {
 				if (distances[i] > Globals.minForwardDistance) {

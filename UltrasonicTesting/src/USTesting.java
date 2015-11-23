@@ -40,7 +40,6 @@ public class USTesting {
 			usL.ping();
 			usR.ping();
 			
-			
 			int[] leftDistances = new int[8];
 			int[] rightDistances = new int[8];
 			int leftAmount = usL.getDistances(leftDistances);

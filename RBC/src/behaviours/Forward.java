@@ -37,43 +37,13 @@ public class Forward implements Behavior{
 		supressed = false;
 		pilot.forward();
 		
-		/*
-		 * while(!supressed) {
-			long currentTime = System.currentTimeMillis();
-			int n = Globals.SamplesForFilter;
-			if (currentTime > nextMeasureTime) {
-				nextMeasureTime = currentTime + Globals.msBetweenReadings;
-				
-				int dl = usL.getDistance();
-				int dr = usR.getDistance();
-				for(int i =0;i<Globals.n-1;i++){
-					leftMeasures[i] = leftMeasures[i+1];
-					rightMeasures[i] = rightMeasures[i+1];
-				}
-
-				leftMeasures[n] = dl*0.4 + leftMeasures[n-1]*0.3 + leftMeasures[n-2]*0.2 + leftMeasures[n-3]*0.1;
-				rightMeasures[n] = dr + rightMeasures[n-1]*0.3 + rightMeasures[n-2]*0.2 + righttMeasures[n-3]*0.1;
-				
-				
-				
-				if ((dr < Globals.dangerZone) || (dl < Globals.dangerZone)) {
-					supressed = true;
-					Sound.playTone(120, 1000);;
-				}
-			}
-			
-			
-			Thread.yield();
-		}
-		 */
-		
 		List<Integer> leftMeasures = new ArrayList<>();
 		List<Integer> rightMeasures = new ArrayList<>();
 		
 		while(!supressed) {
 			long currentTime = System.currentTimeMillis();
 			if (currentTime > nextMeasureTime) {
-				nextMeasureTime = currentTime + Globals.msBetweenReadings;
+				nextMeasureTime += Globals.msBetweenReadings;
 				
 				int dl = usL.getDistance();
 				int dr = usR.getDistance();
@@ -81,7 +51,7 @@ public class Forward implements Behavior{
 				rightMeasures.add(dr);
 				
 				if(rightMeasures.size() % Globals.robotCheckPeriod == 0){
-					Turn.calculateNextTurn(leftMeasures,rightMeasures);
+					Turn.calculateNextTurn(leftMeasures, rightMeasures);
 				}
 				
 				if ((dr < Globals.dangerZone) || (dl < Globals.dangerZone)) {
@@ -89,14 +59,12 @@ public class Forward implements Behavior{
 					Sound.playTone(120, 1000);;
 				}
 			}
-			
-			
+
 			Thread.yield();
 		}
 		
 		pilot.stop();
-		
-		//Turn.calculateNextTurn(leftMeasures, rightMeasures);
+		Turn.calculateNextTurn(leftMeasures, rightMeasures);
 	}
 
 	@Override

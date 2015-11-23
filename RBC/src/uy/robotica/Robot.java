@@ -13,16 +13,9 @@ import lejos.robotics.subsumption.Behavior;
 import config.Globals;
 
 public class Robot {
-	
-	public static DifferentialPilot pilot;
-
-	public static Communication comm;
-	public static CommDebugger commdebugger;
-	public static String behavior;
-	
 	public static void main(String argv[]) {
 
-		pilot = new DifferentialPilot(Globals.wheelDiameter, Globals.trackWidth, Globals.leftMotor, Globals.rightMotor, true);
+		DifferentialPilot pilot = new DifferentialPilot(Globals.wheelDiameter, Globals.trackWidth, Globals.leftMotor, Globals.rightMotor, true);
 		pilot.setTravelSpeed(Globals.travelSpeed);
 		
 		LCD.drawString(Globals.introMsg, 0, 0);
@@ -30,15 +23,6 @@ public class Robot {
 		
 		Button.waitForAnyPress();
 		LCD.clear();
-		
-		/*Music music = new Music();
-		music.playMarch();*/
-		
-		/*comm = new Communication();
-	    comm.start();*/
-	    
-	    /*commdebugger = new CommDebugger();
-	    commdebugger.start();*/
 	    
 	    pilot.forward();
 	    
@@ -52,7 +36,4 @@ public class Robot {
 		Arbitrator arbitrator = new Arbitrator(hierarchy);
 		arbitrator.start();
 	}
-	
-	
-
 }

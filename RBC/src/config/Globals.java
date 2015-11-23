@@ -18,13 +18,10 @@ public class Globals{
 	public static final int scoopRotationAngle = 180;
 	
 	//Sensor Ports
-	//public static final SensorPort camPort =  SensorPort.S1;
 	public static final SensorPort usF =  SensorPort.S1;
 	public static final SensorPort usR = SensorPort.S2;
 	public static final SensorPort usL = SensorPort.S3;
 	public static final SensorPort touchPort =  SensorPort.S4;
-	//public static final SensorPort compassPort =  SensorPort.S3;
-	//public static final SensorPort irPort =  SensorPort.S4;
 	
 	//Motor Ports
 	public static final NXTRegulatedMotor leftMotor =  Motor.A;
@@ -39,7 +36,7 @@ public class Globals{
 	
 	//Navigation
 	public static final int friendlyRobotFootprint = 50; //cm
-	public static final int minForwardDistance = 25; //cm
+	public static final int minForwardDistance = 20; //cm
 	public static final int maxForwardDistance = 200; //cm
 	
 	public static final int backwardsDistance = 15;
@@ -62,14 +59,4 @@ public class Globals{
 	public static final int isMovingDelay = 100;
 	public static final int backDelay = 500;
 	public static final int msBetweenReadings = 100;
-	
-	//Old Globals
-	public static final int distanceTolerance = 25; //mm
-	public static final int wallDistance = 100; //mm
-	
-	public static final int turnAngle = 15;
-	public static final int angleToleranceCorrect = 2;
-	public static final int turnRadiusCorrect = 6;
-	public static final int angleToleranceIncorrect = 6;
-	public static final int turnRadiusIncorrect = 16;
 }
