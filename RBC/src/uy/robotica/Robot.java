@@ -45,10 +45,10 @@ public class Robot {
 		Behavior f = new Forward(pilot, Globals.usL, Globals.usR);
 		Behavior t = new Turn(pilot, Globals.touchPort);
 		Behavior ll = new LiftLoader(pilot, Globals.scoopMotor);
-		Behavior bo = new Backoff(pilot, Globals.touchPort);
 		Behavior flocking = new Flocking(pilot, Globals.usF);
+		Behavior bo = new Backoff(pilot, Globals.touchPort);
 
-		Behavior [] hierarchy = {f, t, ll, bo, flocking};
+		Behavior [] hierarchy = {f, t, ll, flocking, bo};
 		Arbitrator arbitrator = new Arbitrator(hierarchy);
 		arbitrator.start();
 	}

@@ -30,35 +30,36 @@ public class Turn implements Behavior{
 	
 	@Override
 	public boolean takeControl() {
-		return !pilot.isMoving() && !touch.isPressed();
+		return (!pilot.isMoving() && !touch.isPressed()) || isRobot;
 	}
 
 	@Override
 	public void action() {
 		suppressed = false;
-		int steerAngle = 0;
-		if(isRobot){
-			
-			steerAngle=90;
-		}else{
-			steerAngle=180;
-		}
 		pilot.setTravelSpeed(Globals.rotateSpeed);
-		if (turnInPlace) {
+		if(isRobot){
 			if (nextTurn) {
 				//Right in place
-				pilot.steer(-200, -steerAngle, !isRobot);
+				pilot.steer(-200, -90, false);
 			} else {
 				//Left in place
-				pilot.steer(200, steerAngle, !isRobot);
+				pilot.steer(200, 90, false);
+			}
+		} else if (turnInPlace) {
+			if (nextTurn) {
+				//Right in place
+				pilot.steer(-200, -180, true);
+			} else {
+				//Left in place
+				pilot.steer(200, 180, true);
 			}
 		} else { 
 			if (nextTurn) {
 				//Right
-				pilot.steer(-100, -steerAngle, !isRobot);
+				pilot.steer(-100, -180, true);
 			} else {
 				//Left
-				pilot.steer(100, steerAngle, !isRobot);
+				pilot.steer(100, 180, true);
 			}
 		}
 		Delay.msDelay(Globals.isMovingDelay);
@@ -78,7 +79,7 @@ public class Turn implements Behavior{
 
 	@Override
 	public void suppress() {
-		isRobot=false;
+		isRobot = false;
 		suppressed = true;
 	}
 	
@@ -111,7 +112,7 @@ public class Turn implements Behavior{
 		LCD.drawString("Right var" + rightVariance, 0, 7);*/
 		
 		//Flocking
-		if ((tooCloseLeft && tooCloseRight) || isRobot) {
+		if ((tooCloseLeft && tooCloseRight)) {
 			setTurnInPlace();
 		} else if (tooCloseLeft || isRobotRight) {
 			setNextTurnRight();

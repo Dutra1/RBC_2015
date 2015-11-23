@@ -38,24 +38,25 @@ public class Globals{
 	public static final int dropScoopSpeed = 200;
 	
 	//Navigation
-	public static final int friendlyRobotWidth = 30; //cm
+	public static final int friendlyRobotFootprint = 50; //cm
+	public static final int minForwardDistance = 25; //cm
+	public static final int maxForwardDistance = 200; //cm
 	
 	public static final int backwardsDistance = 15;
 	public static final int varianceFactor = 2;
 	
 	//Flocking
-	public static final int sideMinWallDistance = 20; //cm
+	public static final int sideMinWallDistance = 25; //cm
 	public static final int sideMinRobotDistance = 35; //cm
 	public static final int sideMaxRobotDistance = 70; //cm
 	public static final int dangerZone = 7; //cm
-	public static final int thresholdRobot = 20;
 	
 	public static final int robotCheckPeriod = 30;
 	public static final int windowSize = 5;
 	public static final int samplesForFilter = 30;
 	
-	public static final int forwardMinFlockingDistance = 25; //cm
-	public static final int forwardMaxFlockingDistance = 30; //cm
+	public static final int forwardMinFlockingDistance = 45; //cm
+	public static final int forwardMaxFlockingDistance = 50; //cm
 	
 	//Delays
 	public static final int isMovingDelay = 100;

@@ -31,15 +31,25 @@ public class Flocking implements Behavior {
 	public void action() {
 		Sound.beepSequenceUp();
 		
-		us.continuous();
-		Delay.msDelay(20); //Recomendacion de lejos
-		int robotDistance = us.getDistance();
-		
-		if (robotDistance > Globals.forwardMaxFlockingDistance) {
-			pilot.forward();
-		} else if (robotDistance < Globals.forwardMinFlockingDistance) {
-			pilot.backward();
+		while (takeControl()) {
+			us.continuous();
+			Delay.msDelay(20); //Recomendacion de lejos
+			int robotDistance = us.getDistance();	
+			
+			if (robotDistance > Globals.forwardMaxFlockingDistance) {
+				pilot.forward();
+			} else if (robotDistance < Globals.forwardMinFlockingDistance) {
+				pilot.backward();
+			} else {
+				pilot.stop();
+			}
+			
+			Thread.yield();
 		}
+		
+		Sound.beepSequence();
+		pilot.forward();
+		Delay.msDelay(Globals.isMovingDelay);
 	}
 
 	@Override
@@ -53,16 +63,19 @@ public class Flocking implements Behavior {
 		if (cant < 2) {
 			//Vio solo una cosa
 			return false;
-		} else if (cant == 8) {
-			//Vio muchas cosas que seguro son el robot
-			return true;
 		} else {
-			int previousDistance = distances[0];
-			for (int i = 1; i < cant; i++) {
+			int firstDistanceIndex = cant - 1;
+			for (int i = 0; i < cant; i++) {
+				if (distances[i] > Globals.minForwardDistance) {
+					firstDistanceIndex = i;
+				}
+			}
+			int previousDistance = distances[firstDistanceIndex];
+			for (int i = firstDistanceIndex + 1; i < cant; i++) {
 				int currentDistance = distances[i];
-				if (currentDistance == 255) {
+				if (currentDistance > Globals.maxForwardDistance) {
 					return false;
-				} else if (currentDistance - previousDistance > Globals.friendlyRobotWidth) {
+				} else if (currentDistance - previousDistance > Globals.friendlyRobotFootprint) {
 					return true;
 				} else {
 					previousDistance = currentDistance;
